@@ -24,7 +24,7 @@ export const Route = createRootRoute({
       { property: "og:type", content: "website" },
       { property: "og:image", content: "https://litolabs.com/og.jpg" },
       { property: "og:url", content: "https://litolabs.com/" },
-      { name: "theme-color", content: "#33383E" },
+      { name: "theme-color", content: "#33383E" },j
     ],
     links: [
       { rel: "icon", type: "image/png", href: "/favicon.png" },
@@ -61,17 +61,7 @@ function Root() {
             }),
           }}
         />
-        <script
-          type="text/plain"
-          id="analitica"
-          dangerouslySetInnerHTML={{
-            __html: `Pega aquí tu script de analítica respetuosa con la privacidad y usa defer.
-Plausible:
-<script defer data-domain="litolabs.com" src="https://plausible.io/js/script.js"></script>
-Umami:
-<script defer src="https://cloud.umami.is/script.js" data-website-id="TU-ID"></script>`,
-          }}
-        />
+        
       </head>
       <body>
         <PreviewHostBridge />
