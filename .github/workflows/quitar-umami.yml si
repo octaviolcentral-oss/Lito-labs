@@ -1,0 +1,32 @@
+name: Quitar Umami
+on:
+  push:
+    paths:
+      - ".github/workflows/quitar-umami.yml"
+permissions:
+  contents: write
+jobs:
+  fix:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Quitar la nota
+        run: |
+          python3 << 'PY'
+          from pathlib import Path
+          p = Path("src/routes/__root.tsx")
+          text = p.read_text()
+          start = text.find('        <script\n          type="text/plain"')
+          end = text.find("      </head>", start)
+          if start == -1 or end == -1:
+              print("ya no esta")
+          else:
+              p.write_text(text[:start] + text[end:])
+              print("quitado")
+          PY
+          git config user.name "octaviolcentral-oss"
+          git config user.email "octaviolcentral-oss@users.noreply.github.com"
+          git add src/routes/__root.tsx
+          git diff --cached --quiet && exit 0
+          git commit -m "Quita la nota de Umami."
+          git push
