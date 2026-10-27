@@ -1,0 +1,26 @@
+name: Descomprimir sitio
+on:
+  push:
+    paths:
+      - "grok-workspace.zip"
+      - ".github/workflows/unpack.yml"
+permissions:
+  contents: write
+jobs:
+  unpack:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Unzip
+        run: |
+          if [ ! -f grok-workspace.zip ]; then
+            exit 0
+          fi
+          unzip -o grok-workspace.zip
+          rm -f grok-workspace.zip
+          git config user.name "octaviolcentral-oss"
+          git config user.email "octaviolcentral-oss@users.noreply.github.com"
+          git add -A
+          git diff --cached --quiet && exit 0
+          git commit -m "Descomprime el sitio"
+          git push
