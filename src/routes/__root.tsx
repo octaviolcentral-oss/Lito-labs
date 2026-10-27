@@ -24,7 +24,7 @@ export const Route = createRootRoute({
       { property: "og:type", content: "website" },
       { property: "og:image", content: "https://litolabs.com/og.jpg" },
       { property: "og:url", content: "https://litolabs.com/" },
-      { name: "theme-color", content: "#33383E" },j
+      { name: "theme-color", content: "#33383E" },
     ],
     links: [
       { rel: "icon", type: "image/png", href: "/favicon.png" },
