@@ -22,11 +22,12 @@ export const Route = createRootRoute({
           "Diseñamos aplicaciones Android en español que resuelven problemas reales, respetando tu tiempo y tu privacidad.",
       },
       { property: "og:type", content: "website" },
-      { property: "og:image", content: "https://litolabs.com/og.jpg" },
-      { property: "og:url", content: "https://litolabs.com/" },
+      { property: "og:image", content: "https://www.litolabs.app/og.jpg" },
+      { property: "og:url", content: "https://www.litolabs.app/" },
       { name: "theme-color", content: "#33383E" },
     ],
     links: [
+      { rel: "canonical", href: "https://www.litolabs.app/" },
       { rel: "icon", type: "image/png", href: "/favicon.png" },
       { rel: "stylesheet", href: appCss },
       { rel: "manifest", href: "/__grok/manifest.webmanifest" },
@@ -49,9 +50,9 @@ function Root() {
               "@context": "https://schema.org",
               "@type": "Organization",
               name: "Lito Labs",
-              url: "https://litolabs.com/",
+              url: "https://www.litolabs.app/",
               email: "hola@litolabs.app",
-              logo: "https://litolabs.com/brand/ajolote.png",
+              logo: "https://www.litolabs.app/brand/ajolote.png",
               address: {
                 "@type": "PostalAddress",
                 addressLocality: "Tepatitlán de Morelos",
@@ -61,7 +62,6 @@ function Root() {
             }),
           }}
         />
-        
       </head>
       <body>
         <PreviewHostBridge />

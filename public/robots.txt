@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://litolabs.com/sitemap.xml
+Sitemap: https://www.litolabs.app/sitemap.xml

@@ -1,21 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url>
-    <loc>https://litolabs.com/</loc>
-  </url>
-  <url>
-    <loc>https://litolabs.com/privacidad</loc>
-  </url>
-  <url>
-    <loc>https://litolabs.com/contacto</loc>
-  </url>
-  <url>
-    <loc>https://litolabs.com/divisiones</loc>
-  </url>
-  <url>
-    <loc>https://litolabs.com/estado</loc>
-  </url>
-  <url>
-    <loc>https://litolabs.com/aliados</loc>
-  </url>
+  <url><loc>https://www.litolabs.app/</loc></url>
+  <url><loc>https://www.litolabs.app/privacidad</loc></url>
+  <url><loc>https://www.litolabs.app/contacto</loc></url>
+  <url><loc>https://www.litolabs.app/divisiones</loc></url>
+  <url><loc>https://www.litolabs.app/divisiones/brisia</loc></url>
+  <url><loc>https://www.litolabs.app/divisiones/brujula</loc></url>
+  <url><loc>https://www.litolabs.app/divisiones/chispa</loc></url>
+  <url><loc>https://www.litolabs.app/divisiones/tuerca</loc></url>
+  <url><loc>https://www.litolabs.app/divisiones/prisma</loc></url>
+  <url><loc>https://www.litolabs.app/divisiones/oficio</loc></url>
+  <url><loc>https://www.litolabs.app/estado</loc></url>
+  <url><loc>https://www.litolabs.app/aliados</loc></url>
 </urlset>
