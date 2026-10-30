@@ -1,18 +1,15 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { CrisisNote, PageIntro, Shell } from "@/components/site";
 import { MailLink } from "@/components/mail";
+import { pageMeta } from "@/lib/seo";
 
 export const Route = createFileRoute("/aliados")({
-  head: () => ({
-    meta: [
-      { title: "Para aliados · Lito Labs" },
-      {
-        name: "description",
-        content:
-          "Cómo colaborar con Lito Labs: proponer una necesidad, ser probador o recomendar las apps a pacientes y familias.",
-      },
-    ],
-  }),
+  head: () =>
+    pageMeta(
+      "/aliados",
+      "Para aliados · Lito Labs",
+      "Cómo colaborar con Lito Labs: proponer una necesidad, ser probador o recomendar las apps a pacientes y familias.",
+    ),
   component: Aliados,
 });
 

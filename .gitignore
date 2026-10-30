@@ -8,6 +8,7 @@ attachments
 artifacts
 .grok
 *.log
+*.zip
 .env
 .env.local
 .project_id

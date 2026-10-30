@@ -2,21 +2,19 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { PageIntro, Shell } from "@/components/site";
 import { MailLink } from "@/components/mail";
 
-const apps = ["ilux", "Faro", "Linde", "Relevo", "Loto y Lito"] as const;
+import { featuredApps } from "@/lib/content";
+import { pageMeta } from "@/lib/seo";
 
 const fieldClass =
-  "mt-2 w-full rounded-xl border border-line bg-paper px-4 py-3 text-base text-ink placeholder:text-muted";
+  "mt-2 w-full rounded-xl border border-muted bg-paper px-4 py-3 text-base text-ink placeholder:text-muted";
 
 export const Route = createFileRoute("/contacto")({
-  head: () => ({
-    meta: [
-      { title: "Contacto · Lito Labs" },
-      {
-        name: "description",
-        content: "Escribe a Lito Labs o pide ser probador. hola@litolabs.app. Tepatitlán de Morelos, Jalisco.",
-      },
-    ],
-  }),
+  head: () =>
+    pageMeta(
+      "/contacto",
+      "Contacto · Lito Labs",
+      "Escribe a Lito Labs o pide ser probador. hola@litolabs.app. Tepatitlán de Morelos, Jalisco.",
+    ),
   component: Contacto,
 });
 
@@ -60,6 +58,7 @@ function Contacto() {
             method="POST"
             action="https://docs.google.com/forms/d/e/REEMPLAZA_ESTE_ID/formResponse"
             target="_blank"
+            rel="noopener noreferrer"
             onSubmit={(event) => {
               const data = new FormData(event.currentTarget);
               if (String(data.get("company") || "").trim() !== "") {
@@ -113,9 +112,9 @@ function Contacto() {
                 <option value="" disabled>
                   Elige una
                 </option>
-                {apps.map((app) => (
-                  <option key={app} value={app}>
-                    {app}
+                {featuredApps.map((app) => (
+                  <option key={app.name} value={app.name}>
+                    {app.name}
                   </option>
                 ))}
               </select>

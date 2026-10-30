@@ -1,0 +1,12 @@
+{
+  "name": "Lito Labs",
+  "short_name": "Lito Labs",
+  "lang": "es",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#fdf6e9",
+  "theme_color": "#33383e",
+  "icons": [
+    { "src": "/apple-touch-icon.png", "sizes": "180x180", "type": "image/png", "purpose": "any" }
+  ]
+}

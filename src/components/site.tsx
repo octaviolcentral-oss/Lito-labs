@@ -15,7 +15,7 @@ export function SiteHeader({ tone = "cream" }: { tone?: "cream" | "ink" }) {
     <header className={onDark ? "on-ink bg-ink text-cream" : "border-b border-line bg-cream"}>
       <div className="mx-auto flex max-w-5xl items-center justify-between gap-4 px-5 py-4 md:px-8">
         <Link to="/" aria-label="Lito Labs, inicio" className="rounded-full">
-          <StudioLogo tone={onDark ? "cream" : "ink"} />
+          <StudioLogo tone={onDark ? "cream" : "ink"} priority />
         </Link>
         <nav className="hidden items-center gap-1 md:flex" aria-label="Secciones">
           {nav.map((item) => (
@@ -166,13 +166,13 @@ export function Shell({
   return (
     <div className="min-h-screen bg-cream text-ink">
       <a
-        href="#contenido"
+        href="#main"
         className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:rounded-full focus:bg-ink focus:px-4 focus:py-3 focus:text-cream"
       >
         Saltar al contenido
       </a>
       <SiteHeader tone={tone} />
-      <main id="contenido">{children}</main>
+      <main id="main">{children}</main>
       <SiteFooter />
     </div>
   );

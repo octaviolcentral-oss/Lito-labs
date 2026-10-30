@@ -2,13 +2,14 @@ import { useRef, useState } from "react";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { DivisionMark } from "@/components/mark";
 import { Shell } from "@/components/site";
-import { divisions, noItems, promises, yesItems } from "@/lib/content";
+import { divisions, featuredApps, noItems, promises, yesItems } from "@/lib/content";
+import { pageMeta } from "@/lib/seo";
 
 const showcase = [
   {
-    slug: "oficio",
+    slug: featuredApps[0].slug,
     badge: "Próximamente · Suscripción",
-    title: "ilux",
+    title: featuredApps[0].name,
     division: "Oficio",
     description:
       "Control operativo para guardias de seguridad. Diseñada para resistir turnos completos, registrar rondas y mantener la comunicación, incluso sin conexión a internet.",
@@ -19,9 +20,9 @@ const showcase = [
     ],
   },
   {
-    slug: "tuerca",
+    slug: featuredApps[1].slug,
     badge: "En prueba cerrada",
-    title: "Faro",
+    title: featuredApps[1].name,
     division: "Tuerca",
     description:
       "Un lanzador de Android que reduce el ruido digital. Con recordatorios de calma y una pantalla de inicio enfocada en lo esencial, te ayuda a recuperar tu atención.",
@@ -32,9 +33,9 @@ const showcase = [
     ],
   },
   {
-    slug: "chispa",
+    slug: featuredApps[2].slug,
     badge: "En prueba cerrada",
-    title: "Loto y Lito",
+    title: featuredApps[2].name,
     division: "Chispa",
     description:
       "Cuentos para leer en familia, con arte original y un adulto presente. El avance se queda en el teléfono: sin anuncios y sin datos de menores.",
@@ -45,9 +46,9 @@ const showcase = [
     ],
   },
   {
-    slug: "oficio",
+    slug: featuredApps[3].slug,
     badge: "En prueba cerrada",
-    title: "Relevo",
+    title: featuredApps[3].name,
     division: "Oficio",
     description:
       "Organización de tareas y equipos de trabajo. Diseñada para funcionar sin conexión, con recordatorios locales y un enfoque en la claridad diaria. Menos ruido, más enfoque.",
@@ -60,16 +61,12 @@ const showcase = [
 ] as const;
 
 export const Route = createFileRoute("/")({
-  head: () => ({
-    meta: [
-      { title: "Lito Labs · Software con propósito" },
-      {
-        name: "description",
-        content:
-          "Diseñamos aplicaciones Android en español que resuelven problemas reales, respetando tu tiempo y tu privacidad.",
-      },
-    ],
-  }),
+  head: () =>
+    pageMeta(
+      "/",
+      "Lito Labs · Software con propósito",
+      "Diseñamos aplicaciones Android en español que resuelven problemas reales, respetando tu tiempo y tu privacidad.",
+    ),
   component: Home,
 });
 
@@ -96,12 +93,20 @@ function MockupCarousel({
     if (!el || el.clientWidth === 0) return;
     const clamped = Math.max(0, Math.min(shots.length - 1, next));
     setIndex(clamped);
-    el.scrollTo({ left: clamped * el.clientWidth, behavior: "smooth" });
+    const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    el.scrollTo({ left: clamped * el.clientWidth, behavior: reduce ? "auto" : "smooth" });
   }
 
   return (
     <div className="min-w-0">
-      <div ref={scroller} className="mockup-row" onScroll={sync} aria-label={`Pantallas de ${name}`}>
+      <div
+        ref={scroller}
+        role="region"
+        tabIndex={0}
+        className="mockup-row"
+        onScroll={sync}
+        aria-label={`Pantallas de ${name}`}
+      >
         {shots.map((shot) => (
           <div key={shot.src} className="mockup-slide">
             {broken.has(shot.src) ? (

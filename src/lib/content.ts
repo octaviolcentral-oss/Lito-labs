@@ -107,7 +107,7 @@ export const divisions: Division[] = [
     ],
     apps: [
       {
-        name: "Loto y Lito Aventura",
+        name: "Loto y Lito",
         summary:
           "Veinticuatro cuentos para leer juntos, con tiempo de lectura a la vista. Es la app más avanzada del estudio.",
         status: "prueba",
@@ -277,4 +277,12 @@ export const nav = [
   { to: "/estado", label: "Estado" },
   { to: "/aliados", label: "Aliados" },
   { to: "/contacto", label: "Contacto" },
+] as const;
+
+/** Apps que se muestran en la portada y en el formulario de probadores. */
+export const featuredApps = [
+  { name: "ilux", division: "Oficio", slug: "oficio" },
+  { name: "Faro", division: "Tuerca", slug: "tuerca" },
+  { name: "Loto y Lito", division: "Chispa", slug: "chispa" },
+  { name: "Relevo", division: "Oficio", slug: "oficio" },
 ] as const;

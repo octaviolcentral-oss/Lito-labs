@@ -2,18 +2,15 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { DivisionMark } from "@/components/mark";
 import { PageIntro, Shell } from "@/components/site";
 import { divisions, statusLabel } from "@/lib/content";
+import { pageMeta } from "@/lib/seo";
 
 export const Route = createFileRoute("/divisiones/")({
-  head: () => ({
-    meta: [
-      { title: "Divisiones · Lito Labs" },
-      {
-        name: "description",
-        content:
-          "Seis divisiones de Lito Labs: Brisia, Brújula, Chispa, Tuerca, Prisma y Oficio. Cada una con su color y sus apps.",
-      },
-    ],
-  }),
+  head: () =>
+    pageMeta(
+      "/divisiones",
+      "Divisiones · Lito Labs",
+      "Seis divisiones de Lito Labs: Brisia, Brújula, Chispa, Tuerca, Prisma y Oficio. Cada una con su color y sus apps.",
+    ),
   component: Divisiones,
 });
 

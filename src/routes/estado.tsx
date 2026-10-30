@@ -1,18 +1,15 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { PageIntro, Shell } from "@/components/site";
 import { divisions, statusLabel } from "@/lib/content";
+import { pageMeta } from "@/lib/seo";
 
 export const Route = createFileRoute("/estado")({
-  head: () => ({
-    meta: [
-      { title: "Estado de las apps · Lito Labs" },
-      {
-        name: "description",
-        content:
-          "Ninguna aplicación de Lito Labs está publicada en Google Play. Casi todas funcionan en prueba cerrada.",
-      },
-    ],
-  }),
+  head: () =>
+    pageMeta(
+      "/estado",
+      "Estado de las apps · Lito Labs",
+      "Ninguna aplicación de Lito Labs está publicada en Google Play. Casi todas funcionan en prueba cerrada.",
+    ),
   component: Estado,
 });
 

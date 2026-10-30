@@ -36,7 +36,7 @@ export function Axolotl({ className }: { className?: string }) {
   );
 }
 
-export function StudioLogo({ tone = "ink" }: { tone?: "ink" | "cream" }) {
+export function StudioLogo({ tone = "ink", priority = false }: { tone?: "ink" | "cream"; priority?: boolean }) {
   const onDark = tone === "cream";
   return (
     <span
@@ -46,10 +46,11 @@ export function StudioLogo({ tone = "ink" }: { tone?: "ink" | "cream" }) {
       }
     >
       <img
-        src="/brand/ajolote.png"
+        src="/brand/ajolote.webp"
         alt="Ajolote de Lito Labs"
         width={201}
         height={163}
+        fetchPriority={priority ? "high" : undefined}
         className="h-11 w-auto object-contain"
       />
       <span className="text-lg font-semibold tracking-tight text-cream">Lito Labs</span>
@@ -171,7 +172,7 @@ export function AppGlyph({ name }: { name: string }) {
       </Glyph>
     );
   }
-  if (name === "Loto y Lito Aventura") {
+  if (name === "Loto y Lito") {
     return (
       <Glyph>
         <path d="M8 24V10c4 2 6 2 8 0 2 2 4 2 8 0v14c-4 2-6 2-8 0-2 2-4 2-8 0z" {...stroke} />
@@ -286,7 +287,7 @@ export function DivisionMark({ slug }: { slug: string }) {
   const name = divisionName[slug] ?? slug;
   return (
     <img
-      src={`/brand/division-${slug}.png`}
+      src={`/brand/division-${slug}.webp`}
       alt={`Marca de la división ${name}`}
       width={306}
       height={slug === "brisia" ? 281 : 288}
@@ -299,7 +300,7 @@ export function AppMark({ division, name }: { division: string; name: string }) 
   if (name === "Faro") {
     return (
       <img
-        src="/brand/app-faro.png"
+        src="/brand/app-faro.webp"
         alt="Marca de la app Faro"
         width={666}
         height={666}

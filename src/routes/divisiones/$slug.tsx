@@ -2,6 +2,7 @@ import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 import { AppMark, DivisionMark } from "@/components/mark";
 import { CrisisNote, PageIntro, Shell } from "@/components/site";
 import { getDivision, statusLabel } from "@/lib/content";
+import { pageMeta } from "@/lib/seo";
 
 export const Route = createFileRoute("/divisiones/$slug")({
   loader: ({ params }) => {
@@ -9,15 +10,11 @@ export const Route = createFileRoute("/divisiones/$slug")({
     if (!division) throw notFound();
     return { division };
   },
-  head: ({ loaderData }) => ({
-    meta: [
-      { title: loaderData ? `${loaderData.division.name} · Lito Labs` : "División · Lito Labs" },
-      {
-        name: "description",
-        content: loaderData?.division.purpose ?? "Una división de Lito Labs.",
-      },
-    ],
-  }),
+  head: ({ loaderData, params }) => {
+    const title = loaderData ? `${loaderData.division.name} · Lito Labs` : "División · Lito Labs";
+    const description = loaderData?.division.purpose ?? "Una división de Lito Labs.";
+    return pageMeta(`/divisiones/${params.slug}`, title, description);
+  },
   component: DivisionPage,
 });
 

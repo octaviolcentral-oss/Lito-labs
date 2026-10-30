@@ -10,6 +10,7 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as SplatRouteImport } from './routes/$'
 import { Route as AliadosRouteImport } from './routes/aliados'
 import { Route as ContactoRouteImport } from './routes/contacto'
 import { Route as EstadoRouteImport } from './routes/estado'
@@ -20,6 +21,11 @@ import { Route as DivisionesSlugRouteImport } from './routes/divisiones/$slug'
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SplatRoute = SplatRouteImport.update({
+  id: '/$',
+  path: '/$',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AliadosRoute = AliadosRouteImport.update({
@@ -55,6 +61,7 @@ const DivisionesSlugRoute = DivisionesSlugRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/$': typeof SplatRoute
   '/aliados': typeof AliadosRoute
   '/contacto': typeof ContactoRoute
   '/estado': typeof EstadoRoute
@@ -64,6 +71,7 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/$': typeof SplatRoute
   '/aliados': typeof AliadosRoute
   '/contacto': typeof ContactoRoute
   '/estado': typeof EstadoRoute
@@ -74,6 +82,7 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/$': typeof SplatRoute
   '/aliados': typeof AliadosRoute
   '/contacto': typeof ContactoRoute
   '/estado': typeof EstadoRoute
@@ -85,6 +94,7 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/$'
     | '/aliados'
     | '/contacto'
     | '/estado'
@@ -94,6 +104,7 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/$'
     | '/aliados'
     | '/contacto'
     | '/estado'
@@ -103,6 +114,7 @@ export interface FileRouteTypes {
   id:
     | '__root__'
     | '/'
+    | '/$'
     | '/aliados'
     | '/contacto'
     | '/estado'
@@ -113,6 +125,7 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  SplatRoute: typeof SplatRoute
   AliadosRoute: typeof AliadosRoute
   ContactoRoute: typeof ContactoRoute
   EstadoRoute: typeof EstadoRoute
@@ -128,6 +141,13 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/$': {
+      id: '/$'
+      path: '/$'
+      fullPath: '/$'
+      preLoaderRoute: typeof SplatRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/aliados': {
@@ -177,6 +197,7 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  SplatRoute: SplatRoute,
   AliadosRoute: AliadosRoute,
   ContactoRoute: ContactoRoute,
   EstadoRoute: EstadoRoute,

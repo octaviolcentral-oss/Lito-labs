@@ -2,18 +2,15 @@ import { createFileRoute } from "@tanstack/react-router";
 import type { ReactNode } from "react";
 import { PageIntro, Shell } from "@/components/site";
 import { MailLink } from "@/components/mail";
+import { pageMeta } from "@/lib/seo";
 
 export const Route = createFileRoute("/privacidad")({
-  head: () => ({
-    meta: [
-      { title: "Privacidad · Lito Labs" },
-      {
-        name: "description",
-        content:
-          "Política de privacidad de Lito Labs en lenguaje sencillo: los datos se quedan en el teléfono y este sitio no te rastrea.",
-      },
-    ],
-  }),
+  head: () =>
+    pageMeta(
+      "/privacidad",
+      "Privacidad · Lito Labs",
+      "Política de privacidad de Lito Labs en lenguaje sencillo: los datos se quedan en el teléfono y este sitio no te rastrea.",
+    ),
   component: Privacidad,
 });
 
