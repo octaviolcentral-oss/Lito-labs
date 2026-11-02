@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import '../core/theme/app_theme.dart';
 import '../providers/home_provider.dart';
 
 class SettingsScreen extends ConsumerWidget {
@@ -10,16 +11,16 @@ class SettingsScreen extends ConsumerWidget {
     final settingsAsync = ref.watch(settingsRepositoryProvider);
 
     return Scaffold(
-      backgroundColor: const Color(0xFFF9F8F6),
-      appBar: AppBar(title: const Text('Ajustes'), backgroundColor: Colors.transparent, elevation: 0, foregroundColor: const Color(0xFF2C3E35)),
+      backgroundColor: AppTheme.bg,
+      appBar: AppBar(title: const Text('Ajustes'), backgroundColor: Colors.transparent, elevation: 0, foregroundColor: AppTheme.textMain),
       body: settingsAsync.when(
         loading: () => const Center(child: CircularProgressIndicator()),
         error: (e, _) => Center(child: Semantics(label: 'Error al cargar ajustes', child: Text('Error: $e'))),
         data: (repo) => ListView(
-          padding: const EdgeInsets.all(24),
+          padding: const EdgeInsets.fromLTRB(24, 8, 24, 100),
           children: [
-            Semantics(header: true, child: const Text('Privacidad', style: TextStyle(fontWeight: FontWeight.w600, color: Color(0xFF6B7A73), fontSize: 13))),
-            const SizedBox(height: 8),
+            Semantics(header: true, child: Text('Privacidad', style: AppTheme.scaled(context, const TextStyle(fontWeight: FontWeight.w600, color: AppTheme.textSecondary, fontSize: 13)))),
+            const SizedBox(height: 12),
             Semantics(label: 'Bloqueo de Dopamina. Pide PIN para entrar a Dopamina', child: _ToggleTile(
               title: 'Bloqueo de Dopamina',
               subtitle: 'Pide PIN para entrar a Dopamina',
@@ -32,9 +33,9 @@ class SettingsScreen extends ConsumerWidget {
               initial: false,
               onChanged: (v) => repo.setDiscreteMode(v),
             )),
-            const SizedBox(height: 24),
-            Semantics(header: true, child: const Text('Smart Coach', style: TextStyle(fontWeight: FontWeight.w600, color: Color(0xFF6B7A73), fontSize: 13))),
-            const SizedBox(height: 8),
+            const SizedBox(height: 28),
+            Semantics(header: true, child: Text('Smart Coach', style: AppTheme.scaled(context, const TextStyle(fontWeight: FontWeight.w600, color: AppTheme.textSecondary, fontSize: 13)))),
+            const SizedBox(height: 12),
             Semantics(label: 'Consejos Inteligentes. Muestra toasts de recomendaciones', child: _ToggleTile(
               title: 'Consejos Inteligentes',
               subtitle: 'Muestra toasts de recomendaciones',
@@ -67,14 +68,14 @@ class _ToggleTileState extends State<_ToggleTile> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.only(bottom: 8),
+      margin: const EdgeInsets.only(bottom: 10),
       decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(16)),
       child: SwitchListTile(
-        title: Text(widget.title, style: const TextStyle(color: Color(0xFF2C3E35), fontSize: 15)),
-        subtitle: Text(widget.subtitle, style: const TextStyle(fontSize: 12, color: Color(0xFF6B7A73))),
+        title: Text(widget.title, style: AppTheme.scaled(context, const TextStyle(color: AppTheme.textMain, fontSize: 15))),
+        subtitle: Text(widget.subtitle, style: AppTheme.scaled(context, const TextStyle(fontSize: 12, color: AppTheme.textSecondary))),
         value: _value,
         onChanged: (v) { setState(() => _value = v); widget.onChanged(v); },
-        activeColor: const Color(0xFFD27D5E),
+        activeColor: AppTheme.accent,
       ),
     );
   }
