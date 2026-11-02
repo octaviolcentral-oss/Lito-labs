@@ -32,18 +32,18 @@ class HomeScreen extends ConsumerWidget {
                 child: Row(
                   children: [
                     Container(
-                      width: 36, height: 36,
-                      decoration: BoxDecoration(color: const Color(0xFF2C3E35), borderRadius: BorderRadius.circular(12)),
-                      child: const Center(child: Text('P', style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold))),
+                      width: 40, height: 40,
+                      decoration: BoxDecoration(color: const Color(0xFF2C3E35), borderRadius: BorderRadius.circular(14)),
+                      child: const Center(child: Text('P', style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 18))),
                     ),
                     const SizedBox(width: 12),
-                    const Text('Pulso', style: TextStyle(fontSize: 22, fontWeight: FontWeight.w600)),
+                    const Text('Pulso', style: TextStyle(fontSize: 22, fontWeight: FontWeight.w600, letterSpacing: -0.4, color: Color(0xFF2C3E35))),
                   ],
                 ),
               ),
               const SizedBox(height: 8),
-              Semantics(label: 'Saludo del día', child: Text(_greeting(), style: const TextStyle(color: Color(0xFF6B7A73)))),
-              const SizedBox(height: 20),
+              Semantics(label: 'Saludo del día', child: Text(_greeting(), style: const TextStyle(color: Color(0xFF6B7A73), fontSize: 15))),
+              const SizedBox(height: 24),
               Semantics(
                 label: 'Agua consumida: ${summary.waterMl} mililitros. Cafeína: ${summary.caffeineCount}. Chatarra: ${summary.junkCount}',
                 child: Container(
@@ -51,14 +51,14 @@ class HomeScreen extends ConsumerWidget {
                   decoration: BoxDecoration(
                     color: Colors.white,
                     borderRadius: BorderRadius.circular(24),
-                    boxShadow: [BoxShadow(color: Colors.black.withOpacity(0.04), blurRadius: 24, offset: const Offset(0, 8))],
+                    boxShadow: [BoxShadow(color: const Color(0xFF2C3E35).withOpacity(0.05), blurRadius: 32, offset: const Offset(0, 8))],
                   ),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text('${summary.waterMl} ml', style: const TextStyle(fontSize: 36, fontWeight: FontWeight.bold)),
+                      Text('${summary.waterMl} ml', style: const TextStyle(fontSize: 40, fontWeight: FontWeight.bold, color: Color(0xFF2C3E35))),
                       const SizedBox(height: 6),
-                      Text('Cafeína ${summary.caffeineCount} · Chatarra ${summary.junkCount}', style: const TextStyle(color: Color(0xFF6B7A73))),
+                      Text('Cafeína ${summary.caffeineCount} · Chatarra ${summary.junkCount}', style: const TextStyle(color: Color(0xFF6B7A73), fontSize: 14)),
                     ],
                   ),
                 ),
@@ -70,7 +70,7 @@ class HomeScreen extends ConsumerWidget {
                 crossAxisCount: 2,
                 mainAxisSpacing: 12,
                 crossAxisSpacing: 12,
-                childAspectRatio: 1.15,
+                childAspectRatio: 1.2,
                 children: [
                   Semantics(button: true, label: 'Registrar 250 mililitros de agua', child: _ActionTile(icon: Icons.water_drop_outlined, label: 'Agua +250 ml', onTap: () async {
                     await ref.read(homeRepositoryProvider).addWater(250);
@@ -102,7 +102,7 @@ class HomeScreen extends ConsumerWidget {
                       elevation: 0,
                       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
                     ),
-                    child: const Text('Iniciar modo sueño'),
+                    child: const Text('Iniciar modo sueño', style: TextStyle(fontWeight: FontWeight.w600)),
                   ),
                 ),
               ),
@@ -131,9 +131,9 @@ class _ActionTile extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Icon(icon, color: const Color(0xFF2C3E35)),
+            Icon(icon, color: const Color(0xFF2C3E35), size: 24),
             const SizedBox(height: 8),
-            Text(label, textAlign: TextAlign.center, style: const TextStyle(fontSize: 13)),
+            Text(label, textAlign: TextAlign.center, style: const TextStyle(fontSize: 13, color: Color(0xFF2C3E35))),
           ],
         ),
       ),
