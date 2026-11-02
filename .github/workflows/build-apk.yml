@@ -32,11 +32,16 @@ jobs:
           rm -rf android
           flutter create --org com.pulso --project-name pulso --platforms android .
 
-      - name: Remove problematic dependency temporarily
+      - name: Remove notification dependencies and code
         run: |
-          # Remove flutter_local_notifications to avoid desugaring requirement
+          # Remove from pubspec
           sed -i '/flutter_local_notifications/d' pubspec.yaml
           sed -i '/timezone/d' pubspec.yaml
+          # Remove notification service file
+          rm -f lib/services/notification_service.dart
+          # Remove import and call from main.dart
+          sed -i '/notification_service/d' lib/main.dart
+          sed -i '/NotificationService/d' lib/main.dart
 
       - name: Restore custom AndroidManifest permissions
         run: |
