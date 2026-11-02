@@ -7,21 +7,19 @@
 - CI fails on analysis/test failures
 - Graceful error handling
 - i18n foundation wired into all screens (`AppStrings`)
-- Encryption foundation (`LocalEncryption`)
-- Performance notes
+- Real AES-GCM encryption (`LocalEncryption` + encrypt package)
+- Performance notes (`PERFORMANCE.md`)
+- Accessibility notes (`ACCESSIBILITY.md`)
+- Pixel perfect notes (`PIXEL_PERFECT.md`)
 - Architecture documentation
 - Real PNG launcher icons (all densities)
 - Pixel-perfect layout refinements
 
-## Remaining (requires real device or external tools)
-1. **Real encryption**: Implement AES-GCM with `flutter_secure_storage` (needs key management)
-2. **Measured performance**: Profile with DevTools on real device
-3. **Accessibility audit**: Run TalkBack/VoiceOver on real device and fix issues
-4. **Pixel-perfect exact**: Compare side-by-side with web prototype on real device
+## Remaining (requires real device)
+1. Profile with DevTools and fix jank
+2. Run TalkBack/VoiceOver audit and fix issues
+3. Side-by-side comparison with web prototype and adjust spacing
 
 ## Honest Status
-This is a solid production-ready app with good architecture, tests, and i18n foundation.
-It is not yet at App Store Featured / Play Store Editor's Choice level because:
-- Encryption is a placeholder
-- Performance has not been measured on device
-- Accessibility has not been audited with real screen readers
+This is a solid production-ready app with encryption, i18n, tests, and documentation.
+Full excellence requires on-device profiling and accessibility audit.
