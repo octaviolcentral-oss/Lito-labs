@@ -30,22 +30,19 @@ jobs:
       - name: Get dependencies
         run: flutter pub get
 
-      - name: Analyze
-        run: dart analyze || true
+      - name: Build APK with verbose
+        run: flutter build apk --debug --verbose --android-skip-build-dependency-validation 2>&1 | tee build.log || true
 
-      - name: Build APK
-        run: flutter build apk --debug --android-skip-build-dependency-validation || true
-
-      - name: Show build output
+      - name: Show error
         run: |
-          echo "Build directory contents:"
-          ls -la build/app/outputs/flutter-apk/ || echo "No apk dir"
-          find build -name "*.apk" || echo "No apk found"
+          echo "=== LAST 100 LINES ==="
+          tail -100 build.log || echo "No log"
+          echo "=== ERROR LINES ==="
+          grep -i "error\|failed\|exception" build.log || echo "No errors found"
 
-      - name: Upload APK
+      - name: Upload log
         uses: actions/upload-artifact@v4
         with:
-          name: pulso-apk
-          path: pulso/build/app/outputs/flutter-apk/app-debug.apk
+          name: build-log
+          path: pulso/build.log
           if-no-files-found: warn
-          retention-days: 14
