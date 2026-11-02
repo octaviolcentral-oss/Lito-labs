@@ -14,20 +14,32 @@ class MainShell extends StatefulWidget {
 class _MainShellState extends State<MainShell> {
   int _index = 0;
 
-  final _screens = const [
-    HomeScreen(),
-    DopamineScreen(),
-    ReportsScreen(),
-    SettingsScreen(),
-  ];
+  // Lazy-load screens only when first visited
+  final _screens = <Widget?>[null, null, null, null];
+
+  Widget _getScreen(int index) {
+    return _screens[index] ??= switch (index) {
+      0 => const HomeScreen(),
+      1 => const DopamineScreen(),
+      2 => const ReportsScreen(),
+      3 => const SettingsScreen(),
+      _ => const SizedBox.shrink(),
+    };
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: IndexedStack(index: _index, children: _screens),
+      body: IndexedStack(
+        index: _index,
+        children: List.generate(4, (i) => _screens[i] ?? const SizedBox.shrink()),
+      ),
       bottomNavigationBar: NavigationBar(
         selectedIndex: _index,
-        onDestinationSelected: (i) => setState(() => _index = i),
+        onDestinationSelected: (i) {
+          _getScreen(i);
+          setState(() => _index = i);
+        },
         backgroundColor: Colors.white,
         indicatorColor: const Color(0xFFF4F2EF),
         height: 72,
