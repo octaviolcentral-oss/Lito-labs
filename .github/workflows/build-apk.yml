@@ -27,11 +27,19 @@ jobs:
           channel: 'stable'
           cache: true
 
-      - name: Complete Android structure if missing
+      - name: Regenerate Android structure
         run: |
-          if [ ! -f android/gradlew ]; then
-            flutter create --org com.pulso --project-name pulso --platforms android .
-          fi
+          rm -rf android
+          flutter create --org com.pulso --project-name pulso --platforms android .
+
+      - name: Restore custom AndroidManifest permissions
+        run: |
+          # Re-apply essential permissions after flutter create
+          sed -i '/<manifest/a\    <uses-permission android:name="android.permission.RECORD_AUDIO"/>' android/app/src/main/AndroidManifest.xml
+          sed -i '/<manifest/a\    <uses-permission android:name="android.permission.FOREGROUND_SERVICE"/>' android/app/src/main/AndroidManifest.xml
+          sed -i '/<manifest/a\    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_MICROPHONE"/>' android/app/src/main/AndroidManifest.xml
+          sed -i '/<manifest/a\    <uses-permission android:name="android.permission.POST_NOTIFICATIONS"/>' android/app/src/main/AndroidManifest.xml
+          sed -i '/<manifest/a\    <uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM"/>' android/app/src/main/AndroidManifest.xml
 
       - name: Get dependencies
         run: flutter pub get
