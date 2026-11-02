@@ -40,9 +40,133 @@ class _HomeScreenState extends State<HomeScreen> {
     await _load();
     if (mounted) {
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Registrado: $type'), duration: const Duration(seconds: 2)),
+        SnackBar(content: Text('Registrado'), duration: const Duration(seconds: 2)),
       );
     }
+  }
+
+  void _showNapModal() {
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      backgroundColor: Colors.white,
+      shape: const RoundedRectangleBorder(borderRadius: BorderRadius.vertical(top: Radius.circular(28))),
+      builder: (ctx) => Padding(
+        padding: const EdgeInsets.fromLTRB(28, 32, 28, 48),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const Text('Registrar siesta', style: TextStyle(fontSize: 22, fontWeight: FontWeight.w600)),
+            const SizedBox(height: 6),
+            const Text('¿Cuánto tiempo dormiste?', style: TextStyle(color: Color(0xFF6B7A73))),
+            const SizedBox(height: 20),
+            StatefulBuilder(
+              builder: (context, setModalState) {
+                double minutes = 20;
+                return Column(
+                  children: [
+                    Slider(
+                      value: minutes,
+                      min: 5,
+                      max: 180,
+                      divisions: 35,
+                      activeColor: const Color(0xFFD27D5E),
+                      onChanged: (v) => setModalState(() => minutes = v),
+                    ),
+                    Text('${minutes.round()} min', style: const TextStyle(fontWeight: FontWeight.w600)),
+                    if (minutes > 30)
+                      const Padding(
+                        padding: EdgeInsets.only(top: 8),
+                        child: Text('Siestas largas a veces reducen la energía posterior. Se registra igual.', style: TextStyle(color: Color(0xFFA14D2F), fontSize: 13)),
+                      ),
+                    const SizedBox(height: 20),
+                    Row(
+                      children: [
+                        Expanded(child: OutlinedButton(onPressed: () => Navigator.pop(ctx), child: const Text('Cancelar'))),
+                        const SizedBox(width: 12),
+                        Expanded(
+                          child: ElevatedButton(
+                            onPressed: () async {
+                              await _add('nap', value: minutes.round().toString());
+                              if (ctx.mounted) Navigator.pop(ctx);
+                            },
+                            style: ElevatedButton.styleFrom(backgroundColor: const Color(0xFFD27D5E), foregroundColor: Colors.white),
+                            child: const Text('Guardar'),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                );
+              },
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  void _showJunkModal() {
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      backgroundColor: Colors.white,
+      shape: const RoundedRectangleBorder(borderRadius: BorderRadius.vertical(top: Radius.circular(28))),
+      builder: (ctx) => Padding(
+        padding: const EdgeInsets.fromLTRB(28, 32, 28, 48),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const Text('Registrar chatarra', style: TextStyle(fontSize: 22, fontWeight: FontWeight.w600)),
+            const SizedBox(height: 6),
+            const Text('¿Qué comiste?', style: TextStyle(color: Color(0xFF6B7A73))),
+            const SizedBox(height: 16),
+            StatefulBuilder(
+              builder: (context, setModalState) {
+                String selected = 'Papas';
+                return Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Wrap(
+                      spacing: 8,
+                      children: ['Papas', 'Donas', 'Mamut', 'Otro'].map((t) => ChoiceChip(
+                        label: Text(t),
+                        selected: selected == t,
+                        onSelected: (_) => setModalState(() => selected = t),
+                        selectedColor: const Color(0xFFF4E3DC),
+                      )).toList(),
+                    ),
+                    const SizedBox(height: 16),
+                    const Text('¿Cuál es tu nivel de energía ahora?'),
+                    const SizedBox(height: 8),
+                    const Text('1 = Agotado · 10 = Con mucha energía', style: TextStyle(fontSize: 12, color: Color(0xFF6B7A73))),
+                    const SizedBox(height: 20),
+                    Row(
+                      children: [
+                        Expanded(child: OutlinedButton(onPressed: () => Navigator.pop(ctx), child: const Text('Cancelar'))),
+                        const SizedBox(width: 12),
+                        Expanded(
+                          child: ElevatedButton(
+                            onPressed: () async {
+                              await _add('junk', value: selected);
+                              if (ctx.mounted) Navigator.pop(ctx);
+                            },
+                            style: ElevatedButton.styleFrom(backgroundColor: const Color(0xFFD27D5E), foregroundColor: Colors.white),
+                            child: const Text('Guardar'),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                );
+              },
+            ),
+          ],
+        ),
+      ),
+    );
   }
 
   @override
@@ -56,12 +180,9 @@ class _HomeScreenState extends State<HomeScreen> {
             Row(
               children: [
                 Container(
-                  width: 40, height: 40,
-                  decoration: BoxDecoration(
-                    color: const Color(0xFF2C3E35),
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-                  child: const Center(child: Text('P', style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold))),
+                  width: 36, height: 36,
+                  decoration: BoxDecoration(color: const Color(0xFF2C3E35), borderRadius: BorderRadius.circular(12)),
+                  child: const Center(child: Text('P', style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 16))),
                 ),
                 const SizedBox(width: 12),
                 const Text('Pulso', style: TextStyle(fontSize: 22, fontWeight: FontWeight.w600, color: Color(0xFF2C3E35))),
@@ -97,8 +218,8 @@ class _HomeScreenState extends State<HomeScreen> {
               children: [
                 _ActionTile(label: 'Agua +250 ml', onTap: () => _add('water', value: '250')),
                 _ActionTile(label: 'Registrar Coca', onTap: () => _add('caffeine')),
-                _ActionTile(label: 'Registrar siesta', onTap: () => _add('nap')),
-                _ActionTile(label: 'Registrar chatarra', onTap: () => _add('junk')),
+                _ActionTile(label: 'Registrar siesta', onTap: _showNapModal),
+                _ActionTile(label: 'Registrar chatarra', onTap: _showJunkModal),
               ],
             ),
             const SizedBox(height: 24),
@@ -107,11 +228,7 @@ class _HomeScreenState extends State<HomeScreen> {
               child: ElevatedButton(
                 onPressed: () async {
                   await ForegroundService.start();
-                  if (mounted) {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(content: Text('Servicio en segundo plano iniciado')),
-                    );
-                  }
+                  if (mounted) ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Servicio en segundo plano iniciado')));
                 },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: const Color(0xFFF5E6DE),
@@ -142,12 +259,7 @@ class _ActionTile extends StatelessWidget {
       child: InkWell(
         onTap: onTap,
         borderRadius: BorderRadius.circular(20),
-        child: Center(
-          child: Padding(
-            padding: const EdgeInsets.all(12),
-            child: Text(label, textAlign: TextAlign.center, style: const TextStyle(fontSize: 14, color: Color(0xFF2C3E35))),
-          ),
-        ),
+        child: Center(child: Padding(padding: const EdgeInsets.all(12), child: Text(label, textAlign: TextAlign.center, style: const TextStyle(fontSize: 14, color: Color(0xFF2C3E35))))),
       ),
     );
   }
