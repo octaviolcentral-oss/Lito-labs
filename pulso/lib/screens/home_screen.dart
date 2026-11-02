@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import '../core/theme/app_theme.dart';
 import '../providers/home_provider.dart';
 import '../services/foreground_service.dart';
 import '../services/smart_coach.dart';
@@ -17,9 +18,11 @@ class HomeScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final summaryAsync = ref.watch(todaySummaryProvider);
+    final titleStyle = AppTheme.scaled(context, const TextStyle(fontSize: 22, fontWeight: FontWeight.w600, letterSpacing: -0.4, color: AppTheme.textMain));
+    final bigNumber = AppTheme.scaled(context, const TextStyle(fontSize: 40, fontWeight: FontWeight.bold, color: AppTheme.textMain));
 
     return Scaffold(
-      backgroundColor: const Color(0xFFF9F8F6),
+      backgroundColor: AppTheme.bg,
       body: SafeArea(
         child: summaryAsync.when(
           loading: () => const Center(child: CircularProgressIndicator()),
@@ -33,16 +36,16 @@ class HomeScreen extends ConsumerWidget {
                   children: [
                     Container(
                       width: 40, height: 40,
-                      decoration: BoxDecoration(color: const Color(0xFF2C3E35), borderRadius: BorderRadius.circular(14)),
+                      decoration: BoxDecoration(color: AppTheme.textMain, borderRadius: BorderRadius.circular(14)),
                       child: const Center(child: Text('P', style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 18))),
                     ),
                     const SizedBox(width: 12),
-                    const Text('Pulso', style: TextStyle(fontSize: 22, fontWeight: FontWeight.w600, letterSpacing: -0.4, color: Color(0xFF2C3E35))),
+                    Text('Pulso', style: titleStyle),
                   ],
                 ),
               ),
               const SizedBox(height: 8),
-              Semantics(label: 'Saludo del día', child: Text(_greeting(), style: const TextStyle(color: Color(0xFF6B7A73), fontSize: 15))),
+              Semantics(label: 'Saludo del día', child: Text(_greeting(), style: AppTheme.scaled(context, const TextStyle(color: AppTheme.textSecondary, fontSize: 15)))),
               const SizedBox(height: 24),
               Semantics(
                 label: 'Agua consumida: ${summary.waterMl} mililitros. Cafeína: ${summary.caffeineCount}. Chatarra: ${summary.junkCount}',
@@ -51,14 +54,14 @@ class HomeScreen extends ConsumerWidget {
                   decoration: BoxDecoration(
                     color: Colors.white,
                     borderRadius: BorderRadius.circular(24),
-                    boxShadow: [BoxShadow(color: const Color(0xFF2C3E35).withOpacity(0.05), blurRadius: 32, offset: const Offset(0, 8))],
+                    boxShadow: [BoxShadow(color: AppTheme.textMain.withOpacity(0.05), blurRadius: 32, offset: const Offset(0, 8))],
                   ),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text('${summary.waterMl} ml', style: const TextStyle(fontSize: 40, fontWeight: FontWeight.bold, color: Color(0xFF2C3E35))),
+                      Text('${summary.waterMl} ml', style: bigNumber),
                       const SizedBox(height: 6),
-                      Text('Cafeína ${summary.caffeineCount} · Chatarra ${summary.junkCount}', style: const TextStyle(color: Color(0xFF6B7A73), fontSize: 14)),
+                      Text('Cafeína ${summary.caffeineCount} · Chatarra ${summary.junkCount}', style: AppTheme.scaled(context, const TextStyle(color: AppTheme.textSecondary, fontSize: 14))),
                     ],
                   ),
                 ),
@@ -98,11 +101,11 @@ class HomeScreen extends ConsumerWidget {
                     },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: const Color(0xFFF5E6DE),
-                      foregroundColor: const Color(0xFFA14D2F),
+                      foregroundColor: AppTheme.accentText,
                       elevation: 0,
                       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
                     ),
-                    child: const Text('Iniciar modo sueño', style: TextStyle(fontWeight: FontWeight.w600)),
+                    child: Text('Iniciar modo sueño', style: AppTheme.scaled(context, const TextStyle(fontWeight: FontWeight.w600, fontSize: 15))),
                   ),
                 ),
               ),
@@ -123,7 +126,7 @@ class _ActionTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Material(
-      color: const Color(0xFFF4F2EF),
+      color: AppTheme.btnBg,
       borderRadius: BorderRadius.circular(20),
       child: InkWell(
         onTap: onTap,
@@ -131,9 +134,9 @@ class _ActionTile extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Icon(icon, color: const Color(0xFF2C3E35), size: 24),
+            Icon(icon, color: AppTheme.textMain, size: 24),
             const SizedBox(height: 8),
-            Text(label, textAlign: TextAlign.center, style: const TextStyle(fontSize: 13, color: Color(0xFF2C3E35))),
+            Text(label, textAlign: TextAlign.center, style: AppTheme.scaled(context, const TextStyle(fontSize: 13, color: AppTheme.textMain))),
           ],
         ),
       ),
