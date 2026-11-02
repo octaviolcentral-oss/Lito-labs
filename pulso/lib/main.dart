@@ -1,3 +1,4 @@
+import "package:flutter_riverpod/flutter_riverpod.dart";
 import 'package:flutter/material.dart';
 import 'core/theme/app_theme.dart';
 import 'screens/main_shell.dart';
@@ -8,7 +9,7 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await DatabaseService.instance.init();
   await ForegroundService.init();
-  runApp(const PulsoApp());
+  runApp(const ProviderScope(child: PulsoApp()));
 }
 
 class PulsoApp extends StatelessWidget {
