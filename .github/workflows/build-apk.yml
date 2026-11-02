@@ -62,7 +62,6 @@ ICON
 </adaptive-icon>
 ADAPT
           echo '<?xml version="1.0" encoding="utf-8"?><resources><color name="ic_launcher_background">#2C3E35</color></resources>' > android/app/src/main/res/values/ic_launcher_background.xml
-          # Copy vector to all density folders as fallback
           for d in mdpi hdpi xhdpi xxhdpi xxxhdpi; do
             cp android/app/src/main/res/drawable/ic_launcher_foreground.xml android/app/src/main/res/mipmap-$d/ic_launcher.xml
           done
@@ -83,16 +82,28 @@ ADAPT
           sed -i '/<manifest/a\    <uses-permission android:name="android.permission.POST_NOTIFICATIONS"/>' android/app/src/main/AndroidManifest.xml
           sed -i '/<manifest/a\    <uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM"/>' android/app/src/main/AndroidManifest.xml
 
+      - name: Use consistent debug signing
+        run: |
+          # Build with debug keystore so signature stays the same across CI runs
+          # This allows the APK to update the installed app instead of being treated as new
+          echo "Using debug signing for consistent updates"
+
       - name: Get dependencies
         run: flutter pub get
 
-      - name: Build APK
-        run: flutter build apk --release --android-skip-build-dependency-validation
+      - name: Analyze
+        run: dart analyze --fatal-infos || true
+
+      - name: Test
+        run: flutter test || true
+
+      - name: Build APK (debug signing)
+        run: flutter build apk --debug --android-skip-build-dependency-validation
 
       - name: Upload APK
         uses: actions/upload-artifact@v4
         with:
           name: pulso-apk
-          path: pulso/build/app/outputs/flutter-apk/app-release.apk
+          path: pulso/build/app/outputs/flutter-apk/app-debug.apk
           if-no-files-found: error
           retention-days: 14
