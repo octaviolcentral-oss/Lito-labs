@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../core/theme/app_theme.dart';
+import '../l10n/app_strings.dart';
 import '../providers/home_provider.dart';
 
 class DopamineScreen extends ConsumerStatefulWidget {
@@ -34,13 +35,13 @@ class _DopamineScreenState extends ConsumerState<DopamineScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppTheme.bg,
-      appBar: AppBar(title: const Text('Dopamina'), backgroundColor: Colors.transparent, elevation: 0, foregroundColor: AppTheme.textMain),
+      appBar: AppBar(title: const Text(AppStrings.dopamine), backgroundColor: Colors.transparent, elevation: 0, foregroundColor: AppTheme.textMain),
       body: ListView(
         padding: const EdgeInsets.fromLTRB(24, 8, 24, 100),
         children: [
-          const Text('Registro privado para medir picos de dopamina y regulación sensorial', style: TextStyle(color: AppTheme.textSecondary, fontSize: 13)),
+          const Text(AppStrings.dopaminePrivate, style: TextStyle(color: AppTheme.textSecondary, fontSize: 13)),
           const SizedBox(height: 28),
-          const Text('¿A qué hora fue?', style: TextStyle(fontWeight: FontWeight.w600, color: AppTheme.textMain, fontSize: 15)),
+          const Text(AppStrings.whatTime, style: TextStyle(fontWeight: FontWeight.w600, color: AppTheme.textMain, fontSize: 15)),
           const SizedBox(height: 12),
           Wrap(spacing: 8, children: ['Mañana', 'Tarde', 'Noche'].map((t) => ChoiceChip(
             label: Text(t), selected: _time == t,
@@ -51,7 +52,7 @@ class _DopamineScreenState extends ConsumerState<DopamineScreen> {
             shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
           )).toList()),
           const SizedBox(height: 28),
-          const Text('¿Cómo te sentías antes?', style: TextStyle(fontWeight: FontWeight.w600, color: AppTheme.textMain, fontSize: 15)),
+          const Text(AppStrings.howFelt, style: TextStyle(fontWeight: FontWeight.w600, color: AppTheme.textMain, fontSize: 15)),
           const SizedBox(height: 12),
           Wrap(spacing: 8, runSpacing: 8, children: ['Aburrido', 'Ansioso', 'Estresado', 'Otro'].map((f) => ChoiceChip(
             label: Text(f), selected: _feeling == f,
@@ -69,7 +70,7 @@ class _DopamineScreenState extends ConsumerState<DopamineScreen> {
           ElevatedButton(
             onPressed: _saving ? null : _save,
             style: ElevatedButton.styleFrom(backgroundColor: AppTheme.accent, foregroundColor: Colors.white, minimumSize: const Size.fromHeight(52), shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)), elevation: 0),
-            child: _saving ? const SizedBox(height: 20, width: 20, child: CircularProgressIndicator(strokeWidth: 2, color: Colors.white)) : const Text('Registrar', style: TextStyle(fontWeight: FontWeight.w600, fontSize: 15)),
+            child: _saving ? const SizedBox(height: 20, width: 20, child: CircularProgressIndicator(strokeWidth: 2, color: Colors.white)) : const Text(AppStrings.register, style: TextStyle(fontWeight: FontWeight.w600, fontSize: 15)),
           ),
         ],
       ),
