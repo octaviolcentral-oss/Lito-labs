@@ -1,14 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'screens/home_screen.dart';
+import 'screens/main_shell.dart';
 import 'services/database_service.dart';
-import 'services/notification_service.dart';
 import 'services/foreground_service.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await DatabaseService.instance.init();
-  await NotificationService.instance.init();
   await ForegroundService.init();
   runApp(const PulsoApp());
 }
@@ -28,9 +25,16 @@ class PulsoApp extends StatelessWidget {
           brightness: Brightness.light,
         ),
         scaffoldBackgroundColor: const Color(0xFFF9F8F6),
-        fontFamily: 'Inter',
+        navigationBarTheme: NavigationBarThemeData(
+          labelTextStyle: WidgetStateProperty.resolveWith((states) {
+            if (states.contains(WidgetState.selected)) {
+              return const TextStyle(color: Color(0xFFA14D2F), fontSize: 12);
+            }
+            return const TextStyle(color: Color(0xFF8A8A8A), fontSize: 12);
+          }),
+        ),
       ),
-      home: const HomeScreen(),
+      home: const MainShell(),
     );
   }
 }
