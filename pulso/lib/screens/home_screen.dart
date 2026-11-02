@@ -26,7 +26,18 @@ class HomeScreen extends ConsumerWidget {
       body: SafeArea(
         child: summaryAsync.when(
           loading: () => const Center(child: CircularProgressIndicator()),
-          error: (e, _) => Center(child: Semantics(label: 'Error al cargar datos', child: Text('Error: $e'))),
+          error: (e, _) => Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                const Icon(Icons.error_outline, size: 48, color: AppTheme.textSecondary),
+                const SizedBox(height: 16),
+                Semantics(label: 'No se pudieron cargar los datos', child: Text('No se pudieron cargar los datos', style: AppTheme.scaled(context, const TextStyle(color: AppTheme.textSecondary)))),
+                const SizedBox(height: 12),
+                TextButton(onPressed: () => ref.invalidate(todaySummaryProvider), child: const Text('Reintentar')),
+              ],
+            ),
+          ),
           data: (summary) => ListView(
             padding: const EdgeInsets.fromLTRB(24, 16, 24, 100),
             children: [
@@ -62,6 +73,11 @@ class HomeScreen extends ConsumerWidget {
                       Text('${summary.waterMl} ml', style: bigNumber),
                       const SizedBox(height: 6),
                       Text('Cafeína ${summary.caffeineCount} · Chatarra ${summary.junkCount}', style: AppTheme.scaled(context, const TextStyle(color: AppTheme.textSecondary, fontSize: 14))),
+                      if (summary.waterMl == 0 && summary.caffeineCount == 0 && summary.junkCount == 0)
+                        Padding(
+                          padding: const EdgeInsets.only(top: 8),
+                          child: Text('Aún no hay registros hoy', style: AppTheme.scaled(context, const TextStyle(color: AppTheme.textSecondary, fontSize: 12))),
+                        ),
                     ],
                   ),
                 ),
