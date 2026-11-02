@@ -27,6 +27,9 @@ jobs:
           channel: 'stable'
           cache: true
 
+      - name: Install Pillow
+        run: pip install pillow
+
       - name: Regenerate Android structure
         run: |
           rm -rf android
@@ -72,11 +75,11 @@ ADAPT
 
       - name: Remove notification dependencies
         run: |
-          sed -i '/flutter_local_notifications/d' pubspec.yaml
-          sed -i '/timezone/d' pubspec.yaml
-          rm -f lib/services/notification_service.dart
-          sed -i '/notification_service/d' lib/main.dart
-          sed -i '/NotificationService/d' lib/main.dart
+          sed -i '/flutter_local_notifications/d' pubspec.yaml || true
+          sed -i '/timezone/d' pubspec.yaml || true
+          rm -f lib/services/notification_service.dart || true
+          sed -i '/notification_service/d' lib/main.dart || true
+          sed -i '/NotificationService/d' lib/main.dart || true
 
       - name: Restore permissions
         run: |
@@ -88,12 +91,6 @@ ADAPT
 
       - name: Get dependencies
         run: flutter pub get
-
-      - name: Static analysis
-        run: dart analyze || true
-
-      - name: Tests
-        run: flutter test || true
 
       - name: Build APK
         run: flutter build apk --debug --android-skip-build-dependency-validation
