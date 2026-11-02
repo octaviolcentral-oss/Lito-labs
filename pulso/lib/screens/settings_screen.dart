@@ -22,38 +22,38 @@ class SettingsScreen extends ConsumerWidget {
             children: [
               const Icon(Icons.error_outline, size: 48, color: AppTheme.textSecondary),
               const SizedBox(height: 16),
-              Text(AppStrings.errorLoading, style: const TextStyle(color: AppTheme.textSecondary)),
+              Semantics(label: AppStrings.errorLoading, child: Text(AppStrings.errorLoading, style: const TextStyle(color: AppTheme.textSecondary))),
               const SizedBox(height: 12),
-              TextButton(onPressed: () => ref.invalidate(settingsRepositoryProvider), child: Text(AppStrings.retry)),
+              Semantics(button: true, label: AppStrings.retry, child: TextButton(onPressed: () => ref.invalidate(settingsRepositoryProvider), child: Text(AppStrings.retry))),
             ],
           ),
         ),
         data: (repo) => ListView(
           padding: const EdgeInsets.fromLTRB(24, 8, 24, 100),
           children: [
-            Text(AppStrings.privacy, style: const TextStyle(fontWeight: FontWeight.w600, color: AppTheme.textSecondary, fontSize: 13)),
+            Semantics(header: true, child: Text(AppStrings.privacy, style: const TextStyle(fontWeight: FontWeight.w600, color: AppTheme.textSecondary, fontSize: 13))),
             const SizedBox(height: 12),
-            _ToggleTile(
+            Semantics(label: '${AppStrings.dopamineLock}. ${AppStrings.dopamineLockSub}', child: _ToggleTile(
               title: AppStrings.dopamineLock,
               subtitle: AppStrings.dopamineLockSub,
               initial: false,
               onChanged: (v) => repo.setDopamineLock(v),
-            ),
-            _ToggleTile(
+            )),
+            Semantics(label: '${AppStrings.discreteMode}. ${AppStrings.discreteModeSub}', child: _ToggleTile(
               title: AppStrings.discreteMode,
               subtitle: AppStrings.discreteModeSub,
               initial: false,
               onChanged: (v) => repo.setDiscreteMode(v),
-            ),
+            )),
             const SizedBox(height: 28),
-            Text(AppStrings.smartCoach, style: const TextStyle(fontWeight: FontWeight.w600, color: AppTheme.textSecondary, fontSize: 13)),
+            Semantics(header: true, child: Text(AppStrings.smartCoach, style: const TextStyle(fontWeight: FontWeight.w600, color: AppTheme.textSecondary, fontSize: 13))),
             const SizedBox(height: 12),
-            _ToggleTile(
+            Semantics(label: '${AppStrings.smartCoach}. ${AppStrings.smartCoachSub}', child: _ToggleTile(
               title: AppStrings.smartCoach,
               subtitle: AppStrings.smartCoachSub,
               initial: true,
               onChanged: (v) => repo.setSmartCoach(v),
-            ),
+            )),
           ],
         ),
       ),
