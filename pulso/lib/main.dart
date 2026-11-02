@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'core/theme/app_theme.dart';
 import 'screens/main_shell.dart';
 import 'services/database_service.dart';
 import 'services/foreground_service.dart';
@@ -18,22 +19,7 @@ class PulsoApp extends StatelessWidget {
     return MaterialApp(
       title: 'Pulso',
       debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        useMaterial3: true,
-        colorScheme: ColorScheme.fromSeed(
-          seedColor: const Color(0xFFD27D5E),
-          brightness: Brightness.light,
-        ),
-        scaffoldBackgroundColor: const Color(0xFFF9F8F6),
-        navigationBarTheme: NavigationBarThemeData(
-          labelTextStyle: WidgetStateProperty.resolveWith((states) {
-            if (states.contains(WidgetState.selected)) {
-              return const TextStyle(color: Color(0xFFA14D2F), fontSize: 12);
-            }
-            return const TextStyle(color: Color(0xFF8A8A8A), fontSize: 12);
-          }),
-        ),
-      ),
+      theme: AppTheme.light,
       home: const MainShell(),
     );
   }
