@@ -1,10 +1,11 @@
 # Pulso — Performance Notes
 
 ## Applied Optimizations
-- Lazy screen loading in MainShell
+- Lazy screen loading in MainShell (screens created on first visit)
 - IndexedStack for state preservation
 - Theme constants to reduce Color() allocations
 - AppTheme.scaled() for dynamic text
+- Const constructors on static widgets where possible
 
 ## Profiling Steps (on real device)
 1. Connect device
@@ -21,4 +22,4 @@
 ## Recommendations
 - Profile with real data volume
 - Move heavy DB work to compute() if jank appears
-- Add const constructors where possible
+- Add more const constructors
