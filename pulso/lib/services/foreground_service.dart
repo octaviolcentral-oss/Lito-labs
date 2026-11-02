@@ -1,3 +1,4 @@
+import 'dart:isolate';
 import 'package:flutter_foreground_task/flutter_foreground_task.dart';
 
 class ForegroundService {
@@ -42,13 +43,13 @@ void startCallback() {
 
 class PulsoTaskHandler extends TaskHandler {
   @override
-  Future<void> onStart(DateTime timestamp, TaskStarter starter) async {}
+  Future<void> onStart(DateTime timestamp, SendPort? sendPort) async {}
 
   @override
-  void onRepeatEvent(DateTime timestamp) {}
+  void onRepeatEvent(DateTime timestamp, SendPort? sendPort) {}
 
   @override
-  Future<void> onDestroy(DateTime timestamp) async {}
+  Future<void> onDestroy(DateTime timestamp, SendPort? sendPort) async {}
 
   @override
   void onNotificationButtonPressed(String id) {}
