@@ -29,10 +29,10 @@ class SettingsScreen extends ConsumerWidget {
           ),
         ),
         data: (repo) => ListView(
-          padding: const EdgeInsets.fromLTRB(24, 8, 24, 100),
+          padding: const EdgeInsets.fromLTRB(24, 12, 24, 100),
           children: [
-            Semantics(header: true, child: Text(AppStrings.privacy, style: const TextStyle(fontWeight: FontWeight.w600, color: AppTheme.textSecondary, fontSize: 13))),
-            const SizedBox(height: 12),
+            Semantics(header: true, child: Text(AppStrings.privacy, style: const TextStyle(fontWeight: FontWeight.w600, color: AppTheme.textSecondary, fontSize: 14))),
+            const SizedBox(height: 14),
             Semantics(label: '${AppStrings.dopamineLock}. ${AppStrings.dopamineLockSub}', child: _ToggleTile(
               title: AppStrings.dopamineLock,
               subtitle: AppStrings.dopamineLockSub,
@@ -45,9 +45,9 @@ class SettingsScreen extends ConsumerWidget {
               initial: false,
               onChanged: (v) => repo.setDiscreteMode(v),
             )),
-            const SizedBox(height: 28),
-            Semantics(header: true, child: Text(AppStrings.smartCoach, style: const TextStyle(fontWeight: FontWeight.w600, color: AppTheme.textSecondary, fontSize: 13))),
-            const SizedBox(height: 12),
+            const SizedBox(height: 32),
+            Semantics(header: true, child: Text(AppStrings.smartCoach, style: const TextStyle(fontWeight: FontWeight.w600, color: AppTheme.textSecondary, fontSize: 14))),
+            const SizedBox(height: 14),
             Semantics(label: '${AppStrings.smartCoach}. ${AppStrings.smartCoachSub}', child: _ToggleTile(
               title: AppStrings.smartCoach,
               subtitle: AppStrings.smartCoachSub,
@@ -80,11 +80,11 @@ class _ToggleTileState extends State<_ToggleTile> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.only(bottom: 10),
-      decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(16)),
+      margin: const EdgeInsets.only(bottom: 12),
+      decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(18)),
       child: SwitchListTile(
-        title: Text(widget.title, style: const TextStyle(color: AppTheme.textMain, fontSize: 15)),
-        subtitle: Text(widget.subtitle, style: const TextStyle(fontSize: 12, color: AppTheme.textSecondary)),
+        title: Text(widget.title, style: const TextStyle(color: AppTheme.textMain, fontSize: 16)),
+        subtitle: Text(widget.subtitle, style: const TextStyle(fontSize: 13, color: AppTheme.textSecondary)),
         value: _value,
         onChanged: (v) { setState(() => _value = v); widget.onChanged(v); },
         activeColor: AppTheme.accent,

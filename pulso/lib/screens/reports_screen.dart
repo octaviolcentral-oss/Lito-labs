@@ -29,19 +29,19 @@ class ReportsScreen extends ConsumerWidget {
           ),
         ),
         data: (summary) => ListView(
-          padding: const EdgeInsets.fromLTRB(24, 8, 24, 100),
+          padding: const EdgeInsets.fromLTRB(24, 12, 24, 100),
           children: [
-            Semantics(header: true, child: const Text('Resumen de hoy', style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600, color: AppTheme.textMain))),
-            const SizedBox(height: 20),
+            Semantics(header: true, child: const Text('Resumen de hoy', style: TextStyle(fontSize: 20, fontWeight: FontWeight.w600, color: AppTheme.textMain))),
+            const SizedBox(height: 24),
             if (summary.waterMl == 0 && summary.caffeineCount == 0 && summary.junkCount == 0 && summary.dopamineCount == 0 && summary.napCount == 0)
-              Semantics(label: AppStrings.noRecordsToday, child: const Padding(padding: EdgeInsets.only(bottom: 16), child: Text(AppStrings.noRecordsToday, style: TextStyle(color: AppTheme.textSecondary, fontSize: 13)))),
+              Semantics(label: AppStrings.noRecordsToday, child: const Padding(padding: EdgeInsets.only(bottom: 18), child: Text(AppStrings.noRecordsToday, style: TextStyle(color: AppTheme.textSecondary, fontSize: 14)))),
             Semantics(label: '${AppStrings.water}: ${summary.waterMl} mililitros', child: _Stat(label: AppStrings.water, value: '${summary.waterMl} ml')),
             Semantics(label: '${AppStrings.caffeine}: ${summary.caffeineCount}', child: _Stat(label: AppStrings.caffeine, value: '${summary.caffeineCount}')),
             Semantics(label: '${AppStrings.junk}: ${summary.junkCount}', child: _Stat(label: AppStrings.junk, value: '${summary.junkCount}')),
             Semantics(label: '${AppStrings.dopamine}: ${summary.dopamineCount}', child: _Stat(label: AppStrings.dopamine, value: '${summary.dopamineCount}')),
             Semantics(label: '${AppStrings.naps}: ${summary.napCount}', child: _Stat(label: AppStrings.naps, value: '${summary.napCount}')),
-            const SizedBox(height: 28),
-            Semantics(label: AppStrings.dataSavedLocally, child: const Text(AppStrings.dataSavedLocally, style: TextStyle(color: AppTheme.textSecondary, fontSize: 13))),
+            const SizedBox(height: 32),
+            Semantics(label: AppStrings.dataSavedLocally, child: const Text(AppStrings.dataSavedLocally, style: TextStyle(color: AppTheme.textSecondary, fontSize: 14))),
           ],
         ),
       ),
@@ -57,12 +57,12 @@ class _Stat extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.only(bottom: 12),
-      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 18),
-      decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(16), boxShadow: [BoxShadow(color: AppTheme.textMain.withOpacity(0.04), blurRadius: 16, offset: const Offset(0, 4))]),
+      margin: const EdgeInsets.only(bottom: 14),
+      padding: const EdgeInsets.symmetric(horizontal: 22, vertical: 20),
+      decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(18), boxShadow: [BoxShadow(color: AppTheme.textMain.withOpacity(0.04), blurRadius: 20, offset: const Offset(0, 6))]),
       child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-        Text(label, style: const TextStyle(color: AppTheme.textMain, fontSize: 15)),
-        Text(value, style: const TextStyle(fontWeight: FontWeight.bold, color: AppTheme.textMain, fontSize: 15)),
+        Text(label, style: const TextStyle(color: AppTheme.textMain, fontSize: 16)),
+        Text(value, style: const TextStyle(fontWeight: FontWeight.bold, color: AppTheme.textMain, fontSize: 16)),
       ]),
     );
   }
