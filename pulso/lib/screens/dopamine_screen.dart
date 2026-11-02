@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
-import '../services/database_service.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import '../providers/home_provider.dart';
 
-class DopamineScreen extends StatefulWidget {
+class DopamineScreen extends ConsumerStatefulWidget {
   const DopamineScreen({super.key});
 
   @override
-  State<DopamineScreen> createState() => _DopamineScreenState();
+  ConsumerState<DopamineScreen> createState() => _DopamineScreenState();
 }
 
-class _DopamineScreenState extends State<DopamineScreen> {
+class _DopamineScreenState extends ConsumerState<DopamineScreen> {
   String? _time;
   String? _feeling;
   final _other = TextEditingController();
@@ -20,8 +21,8 @@ class _DopamineScreenState extends State<DopamineScreen> {
       return;
     }
     setState(() => _saving = true);
-    final feeling = _feeling == 'Otro' ? _other.text : _feeling;
-    await DatabaseService.instance.insertRecord('dopamine', value: '$_time|$feeling');
+    final feeling = _feeling == 'Otro' ? _other.text : _feeling!;
+    await ref.read(dopamineRepositoryProvider).save(_time!, feeling);
     if (mounted) {
       setState(() { _saving = false; _time = null; _feeling = null; _other.clear(); });
       ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Registro guardado')));
