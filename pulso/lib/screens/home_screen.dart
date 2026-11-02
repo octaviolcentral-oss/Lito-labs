@@ -216,10 +216,10 @@ class _HomeScreenState extends State<HomeScreen> {
               crossAxisSpacing: 12,
               childAspectRatio: 1.15,
               children: [
-                _ActionTile(label: 'Agua +250 ml', onTap: () => _add('water', value: '250')),
-                _ActionTile(label: 'Registrar Coca', onTap: () => _add('caffeine')),
-                _ActionTile(label: 'Registrar siesta', onTap: _showNapModal),
-                _ActionTile(label: 'Registrar chatarra', onTap: _showJunkModal),
+                _ActionTile(icon: Icons.water_drop_outlined, label: "Agua +250 ml", onTap: () => _add("water", value: "250")),
+                _ActionTile(icon: Icons.local_drink_outlined, label: "Registrar Coca", onTap: () => _add("caffeine")),
+                _ActionTile(icon: Icons.bed_outlined, label: "Registrar siesta", onTap: _showNapModal),
+                _ActionTile(icon: Icons.fastfood_outlined, label: "Registrar chatarra", onTap: _showJunkModal),
               ],
             ),
             const SizedBox(height: 24),
@@ -247,9 +247,10 @@ class _HomeScreenState extends State<HomeScreen> {
 }
 
 class _ActionTile extends StatelessWidget {
+  final IconData icon;
   final String label;
   final VoidCallback onTap;
-  const _ActionTile({required this.label, required this.onTap});
+  const _ActionTile({required this.icon, required this.label, required this.onTap});
 
   @override
   Widget build(BuildContext context) {
