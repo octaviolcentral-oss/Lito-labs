@@ -46,6 +46,59 @@ class SettingsScreen extends ConsumerWidget {
               onChanged: (v) => repo.setDiscreteMode(v),
             )),
             const SizedBox(height: 32),
+            const Text('Accesibilidad', style: TextStyle(fontWeight: FontWeight.w600, color: AppTheme.textSecondary, fontSize: 14)),
+            const SizedBox(height: 14),
+            _ToggleTile(
+              title: 'Modo Oscuro',
+              subtitle: 'Fondos oscuros y textos claros',
+              initial: false,
+              onChanged: (v) {
+                // Theme change would require a provider
+              },
+            ),
+            _ToggleTile(
+              title: 'Reducir Animaciones',
+              subtitle: 'Menos movimiento en la interfaz',
+              initial: false,
+              onChanged: (v) {},
+            ),
+            const SizedBox(height: 14),
+            Container(
+              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
+              decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(18)),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const Text('Tamaño de Letra', style: TextStyle(color: AppTheme.textMain, fontSize: 16)),
+                  const SizedBox(height: 8),
+                  DropdownButton<String>(
+                    value: 'Mediano',
+                    isExpanded: true,
+                    items: ['Pequeño', 'Mediano', 'Grande'].map((s) => DropdownMenuItem(value: s, child: Text(s))).toList(),
+                    onChanged: (v) {},
+                  ),
+                ],
+              ),
+            ),
+            const SizedBox(height: 14),
+            Container(
+              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
+              decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(18)),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const Text('Hora límite de cafeína', style: TextStyle(color: AppTheme.textMain, fontSize: 16)),
+                  const SizedBox(height: 8),
+                  DropdownButton<String>(
+                    value: '14:00',
+                    isExpanded: true,
+                    items: ['12:00', '13:00', '14:00', '15:00', '16:00'].map((s) => DropdownMenuItem(value: s, child: Text(s))).toList(),
+                    onChanged: (v) {},
+                  ),
+                ],
+              ),
+            ),
+            const SizedBox(height: 32),
             Semantics(header: true, child: Text(AppStrings.smartCoach, style: const TextStyle(fontWeight: FontWeight.w600, color: AppTheme.textSecondary, fontSize: 14))),
             const SizedBox(height: 14),
             Semantics(label: '${AppStrings.smartCoach}. ${AppStrings.smartCoachSub}', child: _ToggleTile(

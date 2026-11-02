@@ -14,6 +14,19 @@ class MainShell extends StatefulWidget {
 class _MainShellState extends State<MainShell> {
   int _index = 0;
   final _screens = <Widget?>[null, null, null, null];
+  late PageController _pageController;
+
+  @override
+  void initState() {
+    super.initState();
+    _pageController = PageController(initialPage: 0);
+  }
+
+  @override
+  void dispose() {
+    _pageController.dispose();
+    super.dispose();
+  }
 
   Widget _getScreen(int index) {
     return _screens[index] ??= switch (index) {
@@ -25,19 +38,26 @@ class _MainShellState extends State<MainShell> {
     };
   }
 
+  void _onPageChanged(int index) {
+    setState(() => _index = index);
+  }
+
+  void _onDestinationSelected(int index) {
+    _getScreen(index);
+    _pageController.animateToPage(index, duration: const Duration(milliseconds: 300), curve: Curves.easeInOut);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: IndexedStack(
-        index: _index,
-        children: List.generate(4, (i) => _screens[i] ?? const SizedBox.shrink()),
+      body: PageView(
+        controller: _pageController,
+        onPageChanged: _onPageChanged,
+        children: List.generate(4, (i) => _getScreen(i)),
       ),
       bottomNavigationBar: NavigationBar(
         selectedIndex: _index,
-        onDestinationSelected: (i) {
-          _getScreen(i);
-          setState(() => _index = i);
-        },
+        onDestinationSelected: _onDestinationSelected,
         backgroundColor: Colors.white,
         indicatorColor: const Color(0xFFF4F2EF),
         height: 72,

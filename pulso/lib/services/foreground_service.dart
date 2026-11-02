@@ -25,8 +25,8 @@ class ForegroundService {
   static Future<void> start() async {
     if (await FlutterForegroundTask.isRunningService) return;
     await FlutterForegroundTask.startService(
-      notificationTitle: 'Pulso activo',
-      notificationText: 'Grabación o temporizador en segundo plano',
+      notificationTitle: 'Pulso está monitoreando tu sueño',
+      notificationText: 'Modo sueño activo',
       callback: startCallback,
     );
   }
@@ -50,10 +50,4 @@ class PulsoTaskHandler extends TaskHandler {
 
   @override
   Future<void> onDestroy(DateTime timestamp, SendPort? sendPort) async {}
-
-  @override
-  void onNotificationButtonPressed(String id) {}
-
-  @override
-  void onNotificationPressed() {}
 }

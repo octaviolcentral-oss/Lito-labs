@@ -5,6 +5,7 @@ import '../l10n/app_strings.dart';
 import '../providers/home_provider.dart';
 import '../services/foreground_service.dart';
 import '../services/smart_coach.dart';
+import '../widgets/pulso_logo.dart';
 
 class HomeScreen extends ConsumerWidget {
   const HomeScreen({super.key});
@@ -45,11 +46,7 @@ class HomeScreen extends ConsumerWidget {
                 label: '${AppStrings.appName}, ${_greeting()}',
                 child: Row(
                   children: [
-                    Container(
-                      width: 44, height: 44,
-                      decoration: BoxDecoration(color: AppTheme.textMain, borderRadius: BorderRadius.circular(16)),
-                      child: const Center(child: Text('P', style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 20))),
-                    ),
+                    const PulsoLogo(size: 44),
                     const SizedBox(width: 14),
                     Text(AppStrings.appName, style: const TextStyle(fontSize: 24, fontWeight: FontWeight.w600, letterSpacing: -0.5, color: AppTheme.textMain)),
                   ],
@@ -92,7 +89,7 @@ class HomeScreen extends ConsumerWidget {
                     await ref.read(homeRepositoryProvider).addWater(250);
                     ref.invalidate(todaySummaryProvider);
                   })),
-                  Semantics(button: true, label: AppStrings.registerCoke, child: _ActionTile(icon: Icons.local_cafe_outlined, label: AppStrings.registerCoke, onTap: () async {
+                  Semantics(button: true, label: AppStrings.registerCoke, child: _ActionTile(icon: Icons.local_drink_outlined, label: AppStrings.registerCoke, onTap: () async {
                     await ref.read(homeRepositoryProvider).addCaffeine();
                     ref.invalidate(todaySummaryProvider);
                     if (context.mounted) SmartCoach.onCaffeine(context, DateTime.now().hour);
@@ -118,7 +115,7 @@ class HomeScreen extends ConsumerWidget {
                   child: ElevatedButton(
                     onPressed: () async {
                       await ForegroundService.start();
-                      if (context.mounted) ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Servicio en segundo plano iniciado')));
+                      if (context.mounted) ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Modo sueño iniciado')));
                     },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: const Color(0xFFF5E6DE),
