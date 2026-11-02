@@ -1,3 +1,6 @@
+import "package:shared_preferences/shared_preferences.dart";
+import "../features/settings/data/settings_repository_impl.dart";
+import "../features/settings/domain/repositories/settings_repository.dart";
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../features/home/data/home_repository_impl.dart';
 import '../features/home/domain/entities/daily_summary.dart';
@@ -18,4 +21,13 @@ final dopamineRepositoryProvider = Provider<DopamineRepository>((ref) {
 
 final todaySummaryProvider = FutureProvider<DailySummary>((ref) {
   return ref.watch(homeRepositoryProvider).getTodaySummary();
+});
+
+final sharedPreferencesProvider = FutureProvider<SharedPreferences>((ref) async {
+  return SharedPreferences.getInstance();
+});
+
+final settingsRepositoryProvider = FutureProvider<SettingsRepository>((ref) async {
+  final prefs = await ref.watch(sharedPreferencesProvider.future);
+  return SettingsRepositoryImpl(prefs);
 });

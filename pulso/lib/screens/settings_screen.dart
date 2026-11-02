@@ -1,83 +1,77 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import '../providers/home_provider.dart';
 
-class SettingsScreen extends StatefulWidget {
+class SettingsScreen extends ConsumerWidget {
   const SettingsScreen({super.key});
 
   @override
-  State<SettingsScreen> createState() => _SettingsScreenState();
-}
+  Widget build(BuildContext context, WidgetRef ref) {
+    final settingsAsync = ref.watch(settingsRepositoryProvider);
 
-class _SettingsScreenState extends State<SettingsScreen> {
-  bool _dopamineLock = false;
-  bool _discreet = false;
-  bool _darkMode = false;
-  bool _smartCoach = true;
-  String _name = '';
-
-  @override
-  Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: _darkMode ? const Color(0xFF1C2331) : const Color(0xFFF9F8F6),
-      appBar: AppBar(
-        title: const Text('Ajustes'),
-        backgroundColor: Colors.transparent,
-        elevation: 0,
-      ),
-      body: ListView(
-        padding: const EdgeInsets.all(16),
-        children: [
-          const _SectionTitle('Privacidad'),
-          SwitchListTile(
-            title: const Text('Bloqueo de Dopamina'),
-            subtitle: const Text('Pide PIN para entrar a Dopamina'),
-            value: _dopamineLock,
-            onChanged: (v) => setState(() => _dopamineLock = v),
-          ),
-          SwitchListTile(
-            title: const Text('Modo Discreto'),
-            subtitle: const Text('Oculta números de agua y cafeína'),
-            value: _discreet,
-            onChanged: (v) => setState(() => _discreet = v),
-          ),
-          const SizedBox(height: 16),
-          const _SectionTitle('Accesibilidad'),
-          SwitchListTile(
-            title: const Text('Modo Oscuro'),
-            value: _darkMode,
-            onChanged: (v) => setState(() => _darkMode = v),
-          ),
-          const SizedBox(height: 16),
-          const _SectionTitle('Smart Coach'),
-          SwitchListTile(
-            title: const Text('Consejos Inteligentes'),
-            value: _smartCoach,
-            onChanged: (v) => setState(() => _smartCoach = v),
-          ),
-          const SizedBox(height: 16),
-          const _SectionTitle('Perfil'),
-          TextField(
-            decoration: const InputDecoration(
-              labelText: 'Nombre',
-              hintText: '¿Cómo te llamas?',
-              border: OutlineInputBorder(),
+      backgroundColor: const Color(0xFFF9F8F6),
+      appBar: AppBar(title: const Text('Ajustes'), backgroundColor: Colors.transparent, elevation: 0),
+      body: settingsAsync.when(
+        loading: () => const Center(child: CircularProgressIndicator()),
+        error: (e, _) => Center(child: Text('Error: $e')),
+        data: (repo) => ListView(
+          padding: const EdgeInsets.all(24),
+          children: [
+            const Text('Privacidad', style: TextStyle(fontWeight: FontWeight.w600, color: Color(0xFF6B7A73))),
+            const SizedBox(height: 8),
+            _ToggleTile(
+              title: 'Bloqueo de Dopamina',
+              subtitle: 'Pide PIN para entrar a Dopamina',
+              initial: false,
+              onChanged: (v) => repo.setDopamineLock(v),
             ),
-            onChanged: (v) => _name = v,
-          ),
-        ],
+            _ToggleTile(
+              title: 'Modo Discreto',
+              subtitle: 'Oculta números de agua y cafeína',
+              initial: false,
+              onChanged: (v) => repo.setDiscreteMode(v),
+            ),
+            const SizedBox(height: 24),
+            const Text('Smart Coach', style: TextStyle(fontWeight: FontWeight.w600, color: Color(0xFF6B7A73))),
+            const SizedBox(height: 8),
+            _ToggleTile(
+              title: 'Consejos Inteligentes',
+              subtitle: 'Muestra toasts de recomendaciones',
+              initial: true,
+              onChanged: (v) => repo.setSmartCoach(v),
+            ),
+          ],
+        ),
       ),
     );
   }
 }
 
-class _SectionTitle extends StatelessWidget {
-  final String text;
-  const _SectionTitle(this.text);
+class _ToggleTile extends StatefulWidget {
+  final String title;
+  final String subtitle;
+  final bool initial;
+  final ValueChanged<bool> onChanged;
+  const _ToggleTile({required this.title, required this.subtitle, required this.initial, required this.onChanged});
+
+  @override
+  State<_ToggleTile> createState() => _ToggleTileState();
+}
+
+class _ToggleTileState extends State<_ToggleTile> {
+  late bool _value;
+  @override
+  void initState() { super.initState(); _value = widget.initial; }
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(left: 4, bottom: 8, top: 8),
-      child: Text(text, style: const TextStyle(fontSize: 13, color: Colors.grey, fontWeight: FontWeight.w600)),
+    return SwitchListTile(
+      title: Text(widget.title),
+      subtitle: Text(widget.subtitle, style: const TextStyle(fontSize: 12, color: Color(0xFF6B7A73))),
+      value: _value,
+      onChanged: (v) { setState(() => _value = v); widget.onChanged(v); },
+      activeColor: const Color(0xFFD27D5E),
     );
   }
 }

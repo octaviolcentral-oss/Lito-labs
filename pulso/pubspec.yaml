@@ -9,6 +9,7 @@ environment:
 dependencies:
   flutter:
   flutter_riverpod: ^2.5.1
+  shared_preferences: ^2.2.3
     sdk: flutter
   cupertino_icons: ^1.0.6
   sqflite: ^2.3.0
@@ -26,4 +27,5 @@ dev_dependencies:
 
 flutter:
   flutter_riverpod: ^2.5.1
+  shared_preferences: ^2.2.3
   uses-material-design: true
