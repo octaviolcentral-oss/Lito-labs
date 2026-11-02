@@ -13,8 +13,6 @@ class MainShell extends StatefulWidget {
 
 class _MainShellState extends State<MainShell> {
   int _index = 0;
-
-  // Lazy-load screens only when first visited
   final _screens = <Widget?>[null, null, null, null];
 
   Widget _getScreen(int index) {
