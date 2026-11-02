@@ -1,0 +1,31 @@
+class AppStrings {
+  static const String appName = 'Pulso';
+  static const String goodMorning = 'Buenos días';
+  static const String goodAfternoon = 'Buenas tardes';
+  static const String goodEvening = 'Buenas noches';
+  static const String water = 'Agua';
+  static const String caffeine = 'Cafeína';
+  static const String junk = 'Chatarra';
+  static const String dopamine = 'Dopamina';
+  static const String naps = 'Siestas';
+  static const String registerWater = 'Agua +250 ml';
+  static const String registerCoke = 'Registrar Coca';
+  static const String registerNap = 'Registrar siesta';
+  static const String registerJunk = 'Registrar chatarra';
+  static const String startSleep = 'Iniciar modo sueño';
+  static const String noRecordsToday = 'Aún no hay registros hoy';
+  static const String dataSavedLocally = 'Los datos se guardan localmente en tu dispositivo.';
+  static const String retry = 'Reintentar';
+  static const String errorLoading = 'No se pudieron cargar los datos';
+  static const String dopaminePrivate = 'Registro privado para medir picos de dopamina y regulación sensorial';
+  static const String whatTime = '¿A qué hora fue?';
+  static const String howFelt = '¿Cómo te sentías antes?';
+  static const String register = 'Registrar';
+  static const String privacy = 'Privacidad';
+  static const String dopamineLock = 'Bloqueo de Dopamina';
+  static const String dopamineLockSub = 'Pide PIN para entrar a Dopamina';
+  static const String discreteMode = 'Modo Discreto';
+  static const String discreteModeSub = 'Oculta números de agua y cafeína';
+  static const String smartCoach = 'Smart Coach';
+  static const String smartCoachSub = 'Muestra toasts de recomendaciones';
+}
