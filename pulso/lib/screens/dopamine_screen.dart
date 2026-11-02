@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import '../core/theme/app_theme.dart';
 import '../providers/home_provider.dart';
 
 class DopamineScreen extends ConsumerStatefulWidget {
@@ -32,43 +33,43 @@ class _DopamineScreenState extends ConsumerState<DopamineScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFF9F8F6),
-      appBar: AppBar(title: const Text('Dopamina'), backgroundColor: Colors.transparent, elevation: 0, foregroundColor: const Color(0xFF2C3E35)),
+      backgroundColor: AppTheme.bg,
+      appBar: AppBar(title: const Text('Dopamina'), backgroundColor: Colors.transparent, elevation: 0, foregroundColor: AppTheme.textMain),
       body: ListView(
-        padding: const EdgeInsets.all(24),
+        padding: const EdgeInsets.fromLTRB(24, 8, 24, 100),
         children: [
-          Semantics(label: 'Registro privado para medir picos de dopamina y regulación sensorial', child: const Text('Registro privado para medir picos de dopamina y regulación sensorial', style: TextStyle(color: Color(0xFF6B7A73), fontSize: 13))),
-          const SizedBox(height: 24),
-          const Text('¿A qué hora fue?', style: TextStyle(fontWeight: FontWeight.w600, color: Color(0xFF2C3E35))),
+          Semantics(label: 'Registro privado para medir picos de dopamina y regulación sensorial', child: Text('Registro privado para medir picos de dopamina y regulación sensorial', style: AppTheme.scaled(context, const TextStyle(color: AppTheme.textSecondary, fontSize: 13)))),
+          const SizedBox(height: 28),
+          Text('¿A qué hora fue?', style: AppTheme.scaled(context, const TextStyle(fontWeight: FontWeight.w600, color: AppTheme.textMain, fontSize: 15))),
           const SizedBox(height: 12),
           Wrap(spacing: 8, children: ['Mañana', 'Tarde', 'Noche'].map((t) => Semantics(button: true, label: 'Hora: $t', child: ChoiceChip(
             label: Text(t), selected: _time == t,
             onSelected: (_) => setState(() => _time = t),
             selectedColor: const Color(0xFFF4E3DC),
-            backgroundColor: const Color(0xFFF4F2EF),
-            labelStyle: TextStyle(color: _time == t ? const Color(0xFFA14D2F) : const Color(0xFF2C3E35), fontSize: 13),
+            backgroundColor: AppTheme.btnBg,
+            labelStyle: TextStyle(color: _time == t ? AppTheme.accentText : AppTheme.textMain, fontSize: 13),
             shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
           ))).toList()),
-          const SizedBox(height: 24),
-          const Text('¿Cómo te sentías antes?', style: TextStyle(fontWeight: FontWeight.w600, color: Color(0xFF2C3E35))),
+          const SizedBox(height: 28),
+          Text('¿Cómo te sentías antes?', style: AppTheme.scaled(context, const TextStyle(fontWeight: FontWeight.w600, color: AppTheme.textMain, fontSize: 15))),
           const SizedBox(height: 12),
           Wrap(spacing: 8, runSpacing: 8, children: ['Aburrido', 'Ansioso', 'Estresado', 'Otro'].map((f) => Semantics(button: true, label: 'Estado: $f', child: ChoiceChip(
             label: Text(f), selected: _feeling == f,
             onSelected: (_) => setState(() => _feeling = f),
             selectedColor: const Color(0xFFF4E3DC),
-            backgroundColor: const Color(0xFFF4F2EF),
-            labelStyle: TextStyle(color: _feeling == f ? const Color(0xFFA14D2F) : const Color(0xFF2C3E35), fontSize: 13),
+            backgroundColor: AppTheme.btnBg,
+            labelStyle: TextStyle(color: _feeling == f ? AppTheme.accentText : AppTheme.textMain, fontSize: 13),
             shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
           ))).toList()),
           if (_feeling == 'Otro') ...[
-            const SizedBox(height: 12),
+            const SizedBox(height: 16),
             Semantics(label: 'Campo para describir cómo te sentías', child: TextField(controller: _other, decoration: InputDecoration(hintText: 'Escribe cómo te sentías...', border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)), filled: true, fillColor: Colors.white))),
           ],
-          const SizedBox(height: 32),
+          const SizedBox(height: 36),
           Semantics(button: true, label: 'Guardar registro de dopamina', child: ElevatedButton(
             onPressed: _saving ? null : _save,
-            style: ElevatedButton.styleFrom(backgroundColor: const Color(0xFFD27D5E), foregroundColor: Colors.white, minimumSize: const Size.fromHeight(52), shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)), elevation: 0),
-            child: _saving ? const SizedBox(height: 20, width: 20, child: CircularProgressIndicator(strokeWidth: 2, color: Colors.white)) : const Text('Registrar', style: TextStyle(fontWeight: FontWeight.w600)),
+            style: ElevatedButton.styleFrom(backgroundColor: AppTheme.accent, foregroundColor: Colors.white, minimumSize: const Size.fromHeight(52), shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)), elevation: 0),
+            child: _saving ? const SizedBox(height: 20, width: 20, child: CircularProgressIndicator(strokeWidth: 2, color: Colors.white)) : Text('Registrar', style: AppTheme.scaled(context, const TextStyle(fontWeight: FontWeight.w600, fontSize: 15))),
           )),
         ],
       ),
