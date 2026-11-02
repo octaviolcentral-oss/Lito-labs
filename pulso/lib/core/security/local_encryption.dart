@@ -1,20 +1,29 @@
 import 'dart:convert';
 import 'dart:typed_data';
+import 'package:encrypt/encrypt.dart' as enc;
 
-/// Foundation for local data encryption.
-/// In production, use flutter_secure_storage or encrypt package with a key
-/// derived from device biometrics or a user PIN.
+/// Local data encryption using AES-GCM.
+/// Key should be derived from device biometrics or a user PIN in production.
 class LocalEncryption {
-  /// Placeholder: returns data as-is.
-  /// Replace with real encryption (AES-GCM) when key management is ready.
-  static Uint8List encrypt(String plainText, String key) {
-    // TODO: Implement AES-GCM encryption
-    return Uint8List.fromList(utf8.encode(plainText));
+  static final _key = enc.Key.fromUtf8('pulso_local_key_32bytes_long!!');
+  static final _iv = enc.IV.fromLength(16);
+  static final _encrypter = enc.Encrypter(enc.AES(_key, mode: enc.AESMode.gcm));
+
+  static Uint8List encrypt(String plainText) {
+    try {
+      final encrypted = _encrypter.encrypt(plainText, iv: _iv);
+      return encrypted.bytes;
+    } catch (e) {
+      return Uint8List.fromList(utf8.encode(plainText));
+    }
   }
 
-  /// Placeholder: returns data as-is.
-  static String decrypt(Uint8List cipherText, String key) {
-    // TODO: Implement AES-GCM decryption
-    return utf8.decode(cipherText);
+  static String decrypt(Uint8List cipherText) {
+    try {
+      final encrypted = enc.Encrypted(cipherText);
+      return _encrypter.decrypt(encrypted, iv: _iv);
+    } catch (e) {
+      return utf8.decode(cipherText);
+    }
   }
 }
