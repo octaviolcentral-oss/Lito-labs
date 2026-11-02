@@ -1,25 +1,27 @@
 # Pulso — Excellence Gap
 
-## Completed (Steps 1–25)
+## Completed
 - Clean Architecture + Riverpod
 - Accessibility (semantics + text scaling)
-- Unit + widget + integration tests
+- Unit + widget + integration + flow tests
 - CI fails on analysis/test failures
 - Graceful error handling
-- i18n foundation
-- Encryption foundation
+- i18n foundation wired into all screens (`AppStrings`)
+- Encryption foundation (`LocalEncryption`)
 - Performance notes
 - Architecture documentation
+- Real PNG launcher icons (all densities)
+- Pixel-perfect layout refinements
 
-## Remaining for Real Excellence
-1. **Pixel-perfect design**: Match web prototype exactly (SVG logo, exact spacing, custom icons)
-2. **Real PNG icons**: Generate mdpi/hdpi/xhdpi/xxhdpi/xxxhdpi PNGs
-3. **Full i18n**: Wire AppStrings into all screens + arb files
-4. **Real encryption**: Implement AES-GCM with flutter_secure_storage
-5. **Integration tests**: Full user flows (register water → see in reports)
-6. **Measured performance**: Profile with DevTools and fix jank
-7. **Accessibility audit**: Run TalkBack/VoiceOver and fix issues
+## Remaining (requires real device or external tools)
+1. **Real encryption**: Implement AES-GCM with `flutter_secure_storage` (needs key management)
+2. **Measured performance**: Profile with DevTools on real device
+3. **Accessibility audit**: Run TalkBack/VoiceOver on real device and fix issues
+4. **Pixel-perfect exact**: Compare side-by-side with web prototype on real device
 
 ## Honest Status
-This is a solid production-ready MVP with good architecture.
-It is not yet at App Store Featured / Play Store Editor's Choice level.
+This is a solid production-ready app with good architecture, tests, and i18n foundation.
+It is not yet at App Store Featured / Play Store Editor's Choice level because:
+- Encryption is a placeholder
+- Performance has not been measured on device
+- Accessibility has not been audited with real screen readers
