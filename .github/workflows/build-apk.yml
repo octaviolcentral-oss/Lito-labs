@@ -27,51 +27,10 @@ jobs:
           channel: 'stable'
           cache: true
 
-      - name: Install Pillow
-        run: pip install pillow
-
       - name: Regenerate Android structure
         run: |
           rm -rf android
           flutter create --org com.pulso --project-name pulso --platforms android .
-
-      - name: Restore PNG icons
-        run: |
-          mkdir -p android/app/src/main/res/mipmap-mdpi
-          mkdir -p android/app/src/main/res/mipmap-hdpi
-          mkdir -p android/app/src/main/res/mipmap-xhdpi
-          mkdir -p android/app/src/main/res/mipmap-xxhdpi
-          mkdir -p android/app/src/main/res/mipmap-xxxhdpi
-          mkdir -p android/app/src/main/res/mipmap-anydpi-v26
-          mkdir -p android/app/src/main/res/values
-          python3 - << 'PY'
-from PIL import Image, ImageDraw
-import os
-def make_icon(size, path):
-    img = Image.new('RGBA', (size, size), (44, 62, 53, 255))
-    draw = ImageDraw.Draw(img)
-    m = int(size * 0.33)
-    draw.rectangle([m, m, size-m, size-m], fill=(210, 125, 94, 255))
-    i = int(size * 0.44)
-    draw.rectangle([i, i, size-i, size-i], fill=(255, 255, 255, 255))
-    os.makedirs(os.path.dirname(path), exist_ok=True)
-    img.save(path)
-base = "android/app/src/main/res"
-make_icon(48, f"{base}/mipmap-mdpi/ic_launcher.png")
-make_icon(72, f"{base}/mipmap-hdpi/ic_launcher.png")
-make_icon(96, f"{base}/mipmap-xhdpi/ic_launcher.png")
-make_icon(144, f"{base}/mipmap-xxhdpi/ic_launcher.png")
-make_icon(192, f"{base}/mipmap-xxxhdpi/ic_launcher.png")
-print("Icons generated")
-PY
-          cat > android/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml << 'ADAPT'
-<?xml version="1.0" encoding="utf-8"?>
-<adaptive-icon xmlns:android="http://schemas.android.com/apk/res/android">
-    <background android:drawable="@color/ic_launcher_background"/>
-    <foreground android:drawable="@mipmap/ic_launcher"/>
-</adaptive-icon>
-ADAPT
-          echo '<?xml version="1.0" encoding="utf-8"?><resources><color name="ic_launcher_background">#2C3E35</color></resources>' > android/app/src/main/res/values/ic_launcher_background.xml
 
       - name: Remove notification dependencies
         run: |
