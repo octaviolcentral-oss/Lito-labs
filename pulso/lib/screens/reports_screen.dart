@@ -21,7 +21,7 @@ class ReportsScreen extends ConsumerWidget {
             children: [
               const Icon(Icons.error_outline, size: 48, color: AppTheme.textSecondary),
               const SizedBox(height: 16),
-              Semantics(label: 'No se pudieron cargar los reportes', child: Text('No se pudieron cargar los reportes', style: AppTheme.scaled(context, const TextStyle(color: AppTheme.textSecondary)))),
+              const Text('No se pudieron cargar los reportes', style: TextStyle(color: AppTheme.textSecondary)),
               const SizedBox(height: 12),
               TextButton(onPressed: () => ref.invalidate(todaySummaryProvider), child: const Text('Reintentar')),
             ],
@@ -30,20 +30,20 @@ class ReportsScreen extends ConsumerWidget {
         data: (summary) => ListView(
           padding: const EdgeInsets.fromLTRB(24, 8, 24, 100),
           children: [
-            Semantics(header: true, child: Text('Resumen de hoy', style: AppTheme.scaled(context, const TextStyle(fontSize: 18, fontWeight: FontWeight.w600, color: AppTheme.textMain)))),
+            const Text('Resumen de hoy', style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600, color: AppTheme.textMain)),
             const SizedBox(height: 20),
             if (summary.waterMl == 0 && summary.caffeineCount == 0 && summary.junkCount == 0 && summary.dopamineCount == 0 && summary.napCount == 0)
-              Padding(
-                padding: const EdgeInsets.only(bottom: 16),
-                child: Text('Aún no hay registros hoy', style: AppTheme.scaled(context, const TextStyle(color: AppTheme.textSecondary, fontSize: 13))),
+              const Padding(
+                padding: EdgeInsets.only(bottom: 16),
+                child: Text('Aún no hay registros hoy', style: TextStyle(color: AppTheme.textSecondary, fontSize: 13)),
               ),
-            Semantics(label: 'Agua: ${summary.waterMl} mililitros', child: _Stat(label: 'Agua', value: '${summary.waterMl} ml')),
-            Semantics(label: 'Cafeína: ${summary.caffeineCount} registros', child: _Stat(label: 'Cafeína', value: '${summary.caffeineCount}')),
-            Semantics(label: 'Chatarra: ${summary.junkCount} registros', child: _Stat(label: 'Chatarra', value: '${summary.junkCount}')),
-            Semantics(label: 'Dopamina: ${summary.dopamineCount} registros', child: _Stat(label: 'Dopamina', value: '${summary.dopamineCount}')),
-            Semantics(label: 'Siestas: ${summary.napCount} registros', child: _Stat(label: 'Siestas', value: '${summary.napCount}')),
+            _Stat(label: 'Agua', value: '${summary.waterMl} ml'),
+            _Stat(label: 'Cafeína', value: '${summary.caffeineCount}'),
+            _Stat(label: 'Chatarra', value: '${summary.junkCount}'),
+            _Stat(label: 'Dopamina', value: '${summary.dopamineCount}'),
+            _Stat(label: 'Siestas', value: '${summary.napCount}'),
             const SizedBox(height: 28),
-            Semantics(label: 'Los datos se guardan localmente en tu dispositivo', child: Text('Los datos se guardan localmente en tu dispositivo.', style: AppTheme.scaled(context, const TextStyle(color: AppTheme.textSecondary, fontSize: 13)))),
+            const Text('Los datos se guardan localmente en tu dispositivo.', style: TextStyle(color: AppTheme.textSecondary, fontSize: 13)),
           ],
         ),
       ),
@@ -63,8 +63,8 @@ class _Stat extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 18),
       decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(16), boxShadow: [BoxShadow(color: AppTheme.textMain.withOpacity(0.04), blurRadius: 16, offset: const Offset(0, 4))]),
       child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-        Text(label, style: AppTheme.scaled(context, const TextStyle(color: AppTheme.textMain, fontSize: 15))),
-        Text(value, style: AppTheme.scaled(context, const TextStyle(fontWeight: FontWeight.bold, color: AppTheme.textMain, fontSize: 15))),
+        Text(label, style: const TextStyle(color: AppTheme.textMain, fontSize: 15)),
+        Text(value, style: const TextStyle(fontWeight: FontWeight.bold, color: AppTheme.textMain, fontSize: 15)),
       ]),
     );
   }
