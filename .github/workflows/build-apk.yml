@@ -34,12 +34,29 @@ jobs:
 
       - name: Enable core library desugaring
         run: |
-          # Enable desugaring for flutter_local_notifications
-          sed -i '/android {/a\    compileOptions {\n        coreLibraryDesugaringEnabled true\n        sourceCompatibility JavaVersion.VERSION_1_8\n        targetCompatibility JavaVersion.VERSION_1_8\n    }' android/app/build.gradle.kts || \
-          sed -i '/android {/a\    compileOptions {\n        coreLibraryDesugaringEnabled true\n        sourceCompatibility JavaVersion.VERSION_1_8\n        targetCompatibility JavaVersion.VERSION_1_8\n    }' android/app/build.gradle
-          # Add desugar dependency
-          echo 'dependencies { coreLibraryDesugaring("com.android.tools:desugar_jdk_libs:2.0.4") }' >> android/app/build.gradle.kts 2>/dev/null || \
-          echo 'dependencies { coreLibraryDesugaring "com.android.tools:desugar_jdk_libs:2.0.4" }' >> android/app/build.gradle
+          # Insert desugaring config with correct Kotlin DSL syntax
+          python3 - << 'PY'
+          import re
+          path = "android/app/build.gradle.kts"
+          with open(path) as f:
+              content = f.read()
+          # Add compileOptions inside android block
+          desugar = """
+              compileOptions {
+                  isCoreLibraryDesugaringEnabled = true
+                  sourceCompatibility = JavaVersion.VERSION_1_8
+                  targetCompatibility = JavaVersion.VERSION_1_8
+              }
+          """
+          if "compileOptions" not in content:
+              content = content.replace("android {", "android {" + desugar, 1)
+          # Add dependency
+          if "coreLibraryDesugaring" not in content:
+              content += '\ndependencies {\n    coreLibraryDesugaring("com.android.tools:desugar_jdk_libs:2.0.4")\n}\n'
+          with open(path, "w") as f:
+              f.write(content)
+          print("Desugaring enabled")
+          PY
 
       - name: Restore custom AndroidManifest permissions
         run: |
