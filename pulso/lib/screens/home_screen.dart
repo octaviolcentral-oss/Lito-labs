@@ -97,8 +97,16 @@ class HomeScreen extends ConsumerWidget {
                     ref.invalidate(todaySummaryProvider);
                     if (context.mounted) SmartCoach.onCaffeine(context, DateTime.now().hour);
                   })),
-                  Semantics(button: true, label: AppStrings.registerNap, child: _ActionTile(icon: Icons.bed_outlined, label: AppStrings.registerNap, onTap: () {})),
-                  Semantics(button: true, label: AppStrings.registerJunk, child: _ActionTile(icon: Icons.fastfood_outlined, label: AppStrings.registerJunk, onTap: () {})),
+                  Semantics(button: true, label: AppStrings.registerNap, child: _ActionTile(icon: Icons.bed_outlined, label: AppStrings.registerNap, onTap: () async {
+                    await ref.read(homeRepositoryProvider).addNap(20);
+                    ref.invalidate(todaySummaryProvider);
+                    if (context.mounted) ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Siesta registrada (20 min)')));
+                  })),
+                  Semantics(button: true, label: AppStrings.registerJunk, child: _ActionTile(icon: Icons.fastfood_outlined, label: AppStrings.registerJunk, onTap: () async {
+                    await ref.read(homeRepositoryProvider).addJunk("chatarra");
+                    ref.invalidate(todaySummaryProvider);
+                    if (context.mounted) ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Chatarra registrada')));
+                  })),
                 ],
               ),
               const SizedBox(height: 28),
