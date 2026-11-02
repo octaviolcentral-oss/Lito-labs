@@ -22,7 +22,8 @@ class HomeRepositoryImpl implements HomeRepository {
       return s;
     } catch (e, st) {
       AppLogger.error('Failed to load summary', error: e, stack: st, tag: 'HomeRepo');
-      rethrow;
+      // Return empty on failure so UI can still render
+      return DailySummary.empty;
     }
   }
 
