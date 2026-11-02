@@ -73,7 +73,7 @@ class HomeScreen extends ConsumerWidget {
                 crossAxisCount: 2,
                 mainAxisSpacing: 12,
                 crossAxisSpacing: 12,
-                childAspectRatio: 1.2,
+                childAspectRatio: 1.15,
                 children: [
                   Semantics(button: true, label: 'Registrar 250 mililitros de agua', child: _ActionTile(icon: Icons.water_drop_outlined, label: 'Agua +250 ml', onTap: () async {
                     await ref.read(homeRepositoryProvider).addWater(250);
@@ -131,13 +131,16 @@ class _ActionTile extends StatelessWidget {
       child: InkWell(
         onTap: onTap,
         borderRadius: BorderRadius.circular(20),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Icon(icon, color: AppTheme.textMain, size: 24),
-            const SizedBox(height: 8),
-            Text(label, textAlign: TextAlign.center, style: AppTheme.scaled(context, const TextStyle(fontSize: 13, color: AppTheme.textMain))),
-          ],
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 16),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Icon(icon, color: AppTheme.textMain, size: 26),
+              const SizedBox(height: 10),
+              Text(label, textAlign: TextAlign.center, style: AppTheme.scaled(context, const TextStyle(fontSize: 13, color: AppTheme.textMain))),
+            ],
+          ),
         ),
       ),
     );
