@@ -151,6 +151,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           child: ElevatedButton(
                             onPressed: () async {
                               await _add('junk', value: selected);
+                              SmartCoach.onJunk(context);
                               if (ctx.mounted) Navigator.pop(ctx);
                             },
                             style: ElevatedButton.styleFrom(backgroundColor: const Color(0xFFD27D5E), foregroundColor: Colors.white),
