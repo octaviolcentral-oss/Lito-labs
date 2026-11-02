@@ -41,9 +41,6 @@ jobs:
           mkdir -p android/app/src/main/res/mipmap-xxxhdpi
           mkdir -p android/app/src/main/res/mipmap-anydpi-v26
           mkdir -p android/app/src/main/res/values
-          # Copy PNG icons from repo
-          cp -f android/app/src/main/res/mipmap-mdpi/ic_launcher.png android/app/src/main/res/mipmap-mdpi/ic_launcher.png 2>/dev/null || true
-          # Generate simple PNGs if missing
           python3 - << 'PY'
 from PIL import Image, ImageDraw
 import os
@@ -64,7 +61,6 @@ make_icon(144, f"{base}/mipmap-xxhdpi/ic_launcher.png")
 make_icon(192, f"{base}/mipmap-xxxhdpi/ic_launcher.png")
 print("Icons generated")
 PY
-          # Adaptive icon
           cat > android/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml << 'ADAPT'
 <?xml version="1.0" encoding="utf-8"?>
 <adaptive-icon xmlns:android="http://schemas.android.com/apk/res/android">
@@ -93,13 +89,13 @@ ADAPT
       - name: Get dependencies
         run: flutter pub get
 
-      - name: Static analysis (fails on issues)
-        run: dart analyze --fatal-infos || true
+      - name: Static analysis
+        run: dart analyze || true
 
-      - name: Tests (fails on failure)
+      - name: Tests
         run: flutter test || true
 
-      - name: Build APK (debug signing)
+      - name: Build APK
         run: flutter build apk --debug --android-skip-build-dependency-validation
 
       - name: Upload APK
