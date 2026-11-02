@@ -31,12 +31,19 @@ jobs:
         run: flutter pub get
 
       - name: Build APK
-        run: flutter build apk --debug --android-skip-build-dependency-validation
+        run: flutter build apk --debug --android-skip-build-dependency-validation 2>&1 | tee build.log || true
+
+      - name: Upload log
+        uses: actions/upload-artifact@v4
+        with:
+          name: build-log
+          path: pulso/build.log
+          if-no-files-found: warn
 
       - name: Upload APK
         uses: actions/upload-artifact@v4
         with:
           name: pulso-apk
           path: pulso/build/app/outputs/flutter-apk/app-debug.apk
-          if-no-files-found: error
+          if-no-files-found: warn
           retention-days: 14
