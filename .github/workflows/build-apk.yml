@@ -82,20 +82,14 @@ ADAPT
           sed -i '/<manifest/a\    <uses-permission android:name="android.permission.POST_NOTIFICATIONS"/>' android/app/src/main/AndroidManifest.xml
           sed -i '/<manifest/a\    <uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM"/>' android/app/src/main/AndroidManifest.xml
 
-      - name: Use consistent debug signing
-        run: |
-          # Build with debug keystore so signature stays the same across CI runs
-          # This allows the APK to update the installed app instead of being treated as new
-          echo "Using debug signing for consistent updates"
-
       - name: Get dependencies
         run: flutter pub get
 
-      - name: Analyze
+      - name: Static analysis
         run: dart analyze --fatal-infos || true
 
-      - name: Test
-        run: flutter test || true
+      - name: Unit and widget tests
+        run: flutter test --coverage || true
 
       - name: Build APK (debug signing)
         run: flutter build apk --debug --android-skip-build-dependency-validation
