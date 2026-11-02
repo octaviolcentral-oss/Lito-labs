@@ -92,7 +92,7 @@ class HomeScreen extends ConsumerWidget {
                     await ref.read(homeRepositoryProvider).addWater(250);
                     ref.invalidate(todaySummaryProvider);
                   })),
-                  Semantics(button: true, label: AppStrings.registerCoke, child: _ActionTile(icon: Icons.local_drink_outlined, label: AppStrings.registerCoke, onTap: () async {
+                  Semantics(button: true, label: AppStrings.registerCoke, child: _ActionTile(icon: Icons.local_cafe_outlined, label: AppStrings.registerCoke, onTap: () async {
                     await ref.read(homeRepositoryProvider).addCaffeine();
                     ref.invalidate(todaySummaryProvider);
                     if (context.mounted) SmartCoach.onCaffeine(context, DateTime.now().hour);
