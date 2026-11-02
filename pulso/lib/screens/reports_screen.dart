@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../core/theme/app_theme.dart';
+import '../l10n/app_strings.dart';
 import '../providers/home_provider.dart';
 
 class ReportsScreen extends ConsumerWidget {
@@ -21,9 +22,9 @@ class ReportsScreen extends ConsumerWidget {
             children: [
               const Icon(Icons.error_outline, size: 48, color: AppTheme.textSecondary),
               const SizedBox(height: 16),
-              const Text('No se pudieron cargar los reportes', style: TextStyle(color: AppTheme.textSecondary)),
+              Text(AppStrings.errorLoading, style: const TextStyle(color: AppTheme.textSecondary)),
               const SizedBox(height: 12),
-              TextButton(onPressed: () => ref.invalidate(todaySummaryProvider), child: const Text('Reintentar')),
+              TextButton(onPressed: () => ref.invalidate(todaySummaryProvider), child: Text(AppStrings.retry)),
             ],
           ),
         ),
@@ -33,17 +34,14 @@ class ReportsScreen extends ConsumerWidget {
             const Text('Resumen de hoy', style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600, color: AppTheme.textMain)),
             const SizedBox(height: 20),
             if (summary.waterMl == 0 && summary.caffeineCount == 0 && summary.junkCount == 0 && summary.dopamineCount == 0 && summary.napCount == 0)
-              const Padding(
-                padding: EdgeInsets.only(bottom: 16),
-                child: Text('Aún no hay registros hoy', style: TextStyle(color: AppTheme.textSecondary, fontSize: 13)),
-              ),
-            _Stat(label: 'Agua', value: '${summary.waterMl} ml'),
-            _Stat(label: 'Cafeína', value: '${summary.caffeineCount}'),
-            _Stat(label: 'Chatarra', value: '${summary.junkCount}'),
-            _Stat(label: 'Dopamina', value: '${summary.dopamineCount}'),
-            _Stat(label: 'Siestas', value: '${summary.napCount}'),
+              const Padding(padding: EdgeInsets.only(bottom: 16), child: Text(AppStrings.noRecordsToday, style: TextStyle(color: AppTheme.textSecondary, fontSize: 13))),
+            _Stat(label: AppStrings.water, value: '${summary.waterMl} ml'),
+            _Stat(label: AppStrings.caffeine, value: '${summary.caffeineCount}'),
+            _Stat(label: AppStrings.junk, value: '${summary.junkCount}'),
+            _Stat(label: AppStrings.dopamine, value: '${summary.dopamineCount}'),
+            _Stat(label: AppStrings.naps, value: '${summary.napCount}'),
             const SizedBox(height: 28),
-            const Text('Los datos se guardan localmente en tu dispositivo.', style: TextStyle(color: AppTheme.textSecondary, fontSize: 13)),
+            const Text(AppStrings.dataSavedLocally, style: TextStyle(color: AppTheme.textSecondary, fontSize: 13)),
           ],
         ),
       ),

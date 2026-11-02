@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../core/theme/app_theme.dart';
+import '../l10n/app_strings.dart';
 import '../providers/home_provider.dart';
 
 class SettingsScreen extends ConsumerWidget {
@@ -21,35 +22,35 @@ class SettingsScreen extends ConsumerWidget {
             children: [
               const Icon(Icons.error_outline, size: 48, color: AppTheme.textSecondary),
               const SizedBox(height: 16),
-              const Text('No se pudieron cargar los ajustes', style: TextStyle(color: AppTheme.textSecondary)),
+              Text(AppStrings.errorLoading, style: const TextStyle(color: AppTheme.textSecondary)),
               const SizedBox(height: 12),
-              TextButton(onPressed: () => ref.invalidate(settingsRepositoryProvider), child: const Text('Reintentar')),
+              TextButton(onPressed: () => ref.invalidate(settingsRepositoryProvider), child: Text(AppStrings.retry)),
             ],
           ),
         ),
         data: (repo) => ListView(
           padding: const EdgeInsets.fromLTRB(24, 8, 24, 100),
           children: [
-            const Text('Privacidad', style: TextStyle(fontWeight: FontWeight.w600, color: AppTheme.textSecondary, fontSize: 13)),
+            Text(AppStrings.privacy, style: const TextStyle(fontWeight: FontWeight.w600, color: AppTheme.textSecondary, fontSize: 13)),
             const SizedBox(height: 12),
             _ToggleTile(
-              title: 'Bloqueo de Dopamina',
-              subtitle: 'Pide PIN para entrar a Dopamina',
+              title: AppStrings.dopamineLock,
+              subtitle: AppStrings.dopamineLockSub,
               initial: false,
               onChanged: (v) => repo.setDopamineLock(v),
             ),
             _ToggleTile(
-              title: 'Modo Discreto',
-              subtitle: 'Oculta números de agua y cafeína',
+              title: AppStrings.discreteMode,
+              subtitle: AppStrings.discreteModeSub,
               initial: false,
               onChanged: (v) => repo.setDiscreteMode(v),
             ),
             const SizedBox(height: 28),
-            const Text('Smart Coach', style: TextStyle(fontWeight: FontWeight.w600, color: AppTheme.textSecondary, fontSize: 13)),
+            Text(AppStrings.smartCoach, style: const TextStyle(fontWeight: FontWeight.w600, color: AppTheme.textSecondary, fontSize: 13)),
             const SizedBox(height: 12),
             _ToggleTile(
-              title: 'Consejos Inteligentes',
-              subtitle: 'Muestra toasts de recomendaciones',
+              title: AppStrings.smartCoach,
+              subtitle: AppStrings.smartCoachSub,
               initial: true,
               onChanged: (v) => repo.setSmartCoach(v),
             ),
