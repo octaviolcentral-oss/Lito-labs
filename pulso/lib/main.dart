@@ -1,3 +1,4 @@
+import "screens/splash_screen.dart";
 import "package:flutter_riverpod/flutter_riverpod.dart";
 import 'package:flutter/material.dart';
 import 'core/theme/app_theme.dart';
@@ -21,7 +22,7 @@ class PulsoApp extends StatelessWidget {
       title: 'Pulso',
       debugShowCheckedModeBanner: false,
       theme: AppTheme.light,
-      home: const MainShell(),
+      home: const SplashScreen(),
     );
   }
 }
