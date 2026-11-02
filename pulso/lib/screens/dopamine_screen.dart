@@ -25,6 +25,7 @@ class _DopamineScreenState extends ConsumerState<DopamineScreen> {
     setState(() => _saving = true);
     final feeling = _feeling == 'Otro' ? _other.text : _feeling!;
     await ref.read(dopamineRepositoryProvider).save(_time!, feeling);
+    ref.invalidate(todaySummaryProvider);
     if (mounted) {
       setState(() { _saving = false; _time = null; _feeling = null; _other.clear(); });
       ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Registro guardado')));
