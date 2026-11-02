@@ -27,27 +27,6 @@ jobs:
           channel: 'stable'
           cache: true
 
-      - name: Regenerate Android structure
-        run: |
-          rm -rf android
-          flutter create --org com.pulso --project-name pulso --platforms android .
-
-      - name: Remove notification dependencies
-        run: |
-          sed -i '/flutter_local_notifications/d' pubspec.yaml || true
-          sed -i '/timezone/d' pubspec.yaml || true
-          rm -f lib/services/notification_service.dart || true
-          sed -i '/notification_service/d' lib/main.dart || true
-          sed -i '/NotificationService/d' lib/main.dart || true
-
-      - name: Restore permissions
-        run: |
-          sed -i '/<manifest/a\    <uses-permission android:name="android.permission.RECORD_AUDIO"/>' android/app/src/main/AndroidManifest.xml
-          sed -i '/<manifest/a\    <uses-permission android:name="android.permission.FOREGROUND_SERVICE"/>' android/app/src/main/AndroidManifest.xml
-          sed -i '/<manifest/a\    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_MICROPHONE"/>' android/app/src/main/AndroidManifest.xml
-          sed -i '/<manifest/a\    <uses-permission android:name="android.permission.POST_NOTIFICATIONS"/>' android/app/src/main/AndroidManifest.xml
-          sed -i '/<manifest/a\    <uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM"/>' android/app/src/main/AndroidManifest.xml
-
       - name: Get dependencies
         run: flutter pub get
 
