@@ -11,14 +11,14 @@ class SettingsScreen extends ConsumerWidget {
 
     return Scaffold(
       backgroundColor: const Color(0xFFF9F8F6),
-      appBar: AppBar(title: const Text('Ajustes'), backgroundColor: Colors.transparent, elevation: 0),
+      appBar: AppBar(title: const Text('Ajustes'), backgroundColor: Colors.transparent, elevation: 0, foregroundColor: const Color(0xFF2C3E35)),
       body: settingsAsync.when(
         loading: () => const Center(child: CircularProgressIndicator()),
         error: (e, _) => Center(child: Semantics(label: 'Error al cargar ajustes', child: Text('Error: $e'))),
         data: (repo) => ListView(
           padding: const EdgeInsets.all(24),
           children: [
-            Semantics(header: true, child: const Text('Privacidad', style: TextStyle(fontWeight: FontWeight.w600, color: Color(0xFF6B7A73)))),
+            Semantics(header: true, child: const Text('Privacidad', style: TextStyle(fontWeight: FontWeight.w600, color: Color(0xFF6B7A73), fontSize: 13))),
             const SizedBox(height: 8),
             Semantics(label: 'Bloqueo de Dopamina. Pide PIN para entrar a Dopamina', child: _ToggleTile(
               title: 'Bloqueo de Dopamina',
@@ -33,7 +33,7 @@ class SettingsScreen extends ConsumerWidget {
               onChanged: (v) => repo.setDiscreteMode(v),
             )),
             const SizedBox(height: 24),
-            Semantics(header: true, child: const Text('Smart Coach', style: TextStyle(fontWeight: FontWeight.w600, color: Color(0xFF6B7A73)))),
+            Semantics(header: true, child: const Text('Smart Coach', style: TextStyle(fontWeight: FontWeight.w600, color: Color(0xFF6B7A73), fontSize: 13))),
             const SizedBox(height: 8),
             Semantics(label: 'Consejos Inteligentes. Muestra toasts de recomendaciones', child: _ToggleTile(
               title: 'Consejos Inteligentes',
@@ -66,12 +66,16 @@ class _ToggleTileState extends State<_ToggleTile> {
 
   @override
   Widget build(BuildContext context) {
-    return SwitchListTile(
-      title: Text(widget.title),
-      subtitle: Text(widget.subtitle, style: const TextStyle(fontSize: 12, color: Color(0xFF6B7A73))),
-      value: _value,
-      onChanged: (v) { setState(() => _value = v); widget.onChanged(v); },
-      activeColor: const Color(0xFFD27D5E),
+    return Container(
+      margin: const EdgeInsets.only(bottom: 8),
+      decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(16)),
+      child: SwitchListTile(
+        title: Text(widget.title, style: const TextStyle(color: Color(0xFF2C3E35), fontSize: 15)),
+        subtitle: Text(widget.subtitle, style: const TextStyle(fontSize: 12, color: Color(0xFF6B7A73))),
+        value: _value,
+        onChanged: (v) { setState(() => _value = v); widget.onChanged(v); },
+        activeColor: const Color(0xFFD27D5E),
+      ),
     );
   }
 }
