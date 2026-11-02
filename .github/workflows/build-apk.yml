@@ -85,11 +85,11 @@ ADAPT
       - name: Get dependencies
         run: flutter pub get
 
-      - name: Static analysis
-        run: dart analyze --fatal-infos || true
+      - name: Static analysis (fails on issues)
+        run: dart analyze --fatal-infos
 
-      - name: Unit and widget tests
-        run: flutter test --coverage || true
+      - name: Tests (fails on failure)
+        run: flutter test
 
       - name: Build APK (debug signing)
         run: flutter build apk --debug --android-skip-build-dependency-validation
