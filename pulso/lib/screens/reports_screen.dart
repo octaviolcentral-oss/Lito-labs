@@ -15,12 +15,28 @@ class ReportsScreen extends ConsumerWidget {
       appBar: AppBar(title: const Text('Reportes'), backgroundColor: Colors.transparent, elevation: 0, foregroundColor: AppTheme.textMain),
       body: summaryAsync.when(
         loading: () => const Center(child: CircularProgressIndicator()),
-        error: (e, _) => Center(child: Semantics(label: 'Error al cargar reportes', child: Text('Error: $e'))),
+        error: (e, _) => Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              const Icon(Icons.error_outline, size: 48, color: AppTheme.textSecondary),
+              const SizedBox(height: 16),
+              Semantics(label: 'No se pudieron cargar los reportes', child: Text('No se pudieron cargar los reportes', style: AppTheme.scaled(context, const TextStyle(color: AppTheme.textSecondary)))),
+              const SizedBox(height: 12),
+              TextButton(onPressed: () => ref.invalidate(todaySummaryProvider), child: const Text('Reintentar')),
+            ],
+          ),
+        ),
         data: (summary) => ListView(
           padding: const EdgeInsets.fromLTRB(24, 8, 24, 100),
           children: [
             Semantics(header: true, child: Text('Resumen de hoy', style: AppTheme.scaled(context, const TextStyle(fontSize: 18, fontWeight: FontWeight.w600, color: AppTheme.textMain)))),
             const SizedBox(height: 20),
+            if (summary.waterMl == 0 && summary.caffeineCount == 0 && summary.junkCount == 0 && summary.dopamineCount == 0 && summary.napCount == 0)
+              Padding(
+                padding: const EdgeInsets.only(bottom: 16),
+                child: Text('Aún no hay registros hoy', style: AppTheme.scaled(context, const TextStyle(color: AppTheme.textSecondary, fontSize: 13))),
+              ),
             Semantics(label: 'Agua: ${summary.waterMl} mililitros', child: _Stat(label: 'Agua', value: '${summary.waterMl} ml')),
             Semantics(label: 'Cafeína: ${summary.caffeineCount} registros', child: _Stat(label: 'Cafeína', value: '${summary.caffeineCount}')),
             Semantics(label: 'Chatarra: ${summary.junkCount} registros', child: _Stat(label: 'Chatarra', value: '${summary.junkCount}')),
